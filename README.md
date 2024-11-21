@@ -221,7 +221,7 @@ Several menu groups are created so that they can be displayed or not.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Example
-<table>
+<!-- <table>
     <tr>
         <td width='70%'>
             <center>
@@ -256,7 +256,7 @@ Several menu groups are created so that they can be displayed or not.
             <img src="https://github.com/user-attachments/assets/2c95dd69-2afb-44a8-a612-ff22e4b18c3b"  width="100%" />
         </td>
     </tr>
-</table>
+</table> -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
