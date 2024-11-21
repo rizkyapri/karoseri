@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\incoming;
+use App\Models\Incoming;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class IncomingController extends Controller
      */
     public function index()
     {
-        $incomings = incoming::with('product', 'supplier')->get();
+        $incomings = Incoming::with('product', 'supplier')->get();
         return view('incoming.index', compact('incomings'));
     }
 
@@ -49,7 +49,7 @@ class IncomingController extends Controller
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
 
-        incoming::create([
+        Incoming::create([
             'id_user' => $request->id_user,
             'id_product' => $request->id_product,
             'id_supplier' => $request->id_supplier,
@@ -67,9 +67,9 @@ class IncomingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(incoming $incoming, $id)
+    public function show(Incoming $incoming, $id)
     {
-        $incoming = incoming::with('product', 'supplier','creator', 'updater')->find($id);
+        $incoming = Incoming::with('product', 'supplier','creator', 'updater')->find($id);
         
         return view('incoming.show', compact('incoming'));
     }
@@ -77,9 +77,9 @@ class IncomingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(incoming $incoming, $id)
+    public function edit(Incoming $incoming, $id)
     {
-        $incoming = incoming::with('product', 'supplier')->find($id);
+        $incoming = Incoming::with('product', 'supplier')->find($id);
         $suppliers = Supplier::all();
         $products = Product::all();
         // dd($incoming);
@@ -89,7 +89,7 @@ class IncomingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, incoming $incoming, $id)
+    public function update(Request $request, Incoming $incoming, $id)
     {
         $validation = Validator::make($request->all(), [
             'id_supplier' => 'required|integer',
@@ -105,7 +105,7 @@ class IncomingController extends Controller
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
 
-        incoming::where('id', $id)->update([
+        Incoming::where('id', $id)->update([
             'id_product' => $request->id_product,
             'id_supplier' => $request->id_supplier,
             'updater_id' => auth()->id(),
@@ -122,9 +122,9 @@ class IncomingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(incoming $incoming, $id)
+    public function destroy(Incoming $incoming, $id)
     {
-        $incoming = incoming::find($id);
+        $incoming = Incoming::find($id);
         $incoming->delete();
 
         return redirect()->route('incoming.index')->with('success', 'Barang Masuk berhasil dihapus.');

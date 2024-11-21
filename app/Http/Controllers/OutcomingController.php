@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\outcoming;
+use App\Models\Outcoming;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class OutcomingController extends Controller
      */
     public function index()
     {
-        $outcomings = outcoming::all();
+        $outcomings = Outcoming::all();
         return view('outcoming.index', compact('outcomings'));
     }
 
@@ -47,7 +47,7 @@ class OutcomingController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
-        outcoming::create([
+        Outcoming::create([
             'id_product' => $request->id_product,
             'creator_id' => auth()->id(),
             'purchase_date' => $request->tanggal,
@@ -64,9 +64,9 @@ class OutcomingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(outcoming $outcoming, $id)
+    public function show(Outcoming $outcoming, $id)
     {
-        $outcoming = outcoming::find($id)->with('product')->first();
+        $outcoming = Outcoming::find($id)->with('product')->first();
 
         return view('outcoming.show', compact('outcoming'));
     }
@@ -74,9 +74,9 @@ class OutcomingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(outcoming $outcoming, $id)
+    public function edit(Outcoming $outcoming, $id)
     {
-        $outcoming = outcoming::find($id);
+        $outcoming = Outcoming::find($id);
         $products = Product::all();
         return view('outcoming.edit', compact('outcoming', 'products'));
     }
@@ -84,7 +84,7 @@ class OutcomingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, outcoming $outcoming, $id)
+    public function update(Request $request, Outcoming $outcoming, $id)
     {
         $validation = Validator::make($request->all(), [
             'id_product' => 'required|integer',
@@ -100,7 +100,7 @@ class OutcomingController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
-        outcoming::where('id', $id)->update([
+        Outcoming::where('id', $id)->update([
             'id_product' => $request->id_product,
             'updater_id' => auth()->id(),
             'purchase_date' => $request->tanggal,
@@ -117,9 +117,9 @@ class OutcomingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(outcoming $outcoming, $id)
+    public function destroy(Outcoming $outcoming, $id)
     {
-        $outcoming = outcoming::find($id);
+        $outcoming = Outcoming::find($id);
         $outcoming->delete();
         return redirect()->route('outcoming.index')->with('success', 'Data Berhasil Dihapus');
     }
