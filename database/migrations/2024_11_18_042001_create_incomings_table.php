@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->integer('id_product')->nullable();
             $table->integer('id_supplier')->nullable();
+            $table->integer('creator_id')->nullable();
+            $table->integer('updater_id')->nullable();
             $table->string('kode_penerimaan')->unique()->nullable();
+            $table->integer('kuantitas')->nullable();
             $table->string('unit')->nullable();
             $table->string('keterangan')->nullable();
-            $table->date('start_date')->nullable();
+            $table->datetime('start_date')->nullable();
             $table->timestamps();
         });
     }

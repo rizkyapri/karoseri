@@ -1,5 +1,5 @@
 @extends('inc.main')
-@section('title', 'Pengguna')
+@section('title', 'Produk')
 @section('pages-css')
     <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
     <link rel="stylesheet" media="screen, print" href="/admin/css/theme-demo.css">
@@ -9,19 +9,20 @@
 @section('pages-content')
     <main id="js-page-content" role="main" class="page-content">
         @include('inc._page_breadcrumb', [
-            'category_1' => 'Settings',
+            'category_1' => 'Master',
         ])
         <div class="subheader">
             @component('inc._page_heading', [
-                'icon' => 'user',
-                'heading1' => 'Pengguna',
-                'heading2' => 'WebApps',
+                'icon' => 'shopping-bag',
+                'heading1' => 'Produk',
+                'heading2' => 'Karoseri',   
             ])
             @endcomponent
         </div>
-        <form action="{{ route('user.store') }}" method="POST">
+        <form action="{{ route('product.update', $product->id) }}" method="POST">
             @csrf
-            <x-panel.show title="Tambah" subtitle="Pengguna">
+            @method('PUT')
+            <x-panel.show title="Edit" subtitle="Produk">
                 <x-slot name="paneltoolbar">
                     <x-panel.tool-bar class="ml-2">
                         <button class="btn btn-toolbar-master" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -29,46 +30,46 @@
                             <i class="fal fa-ellipsis-v"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right">
-                            <a class="dropdown-item" href="{{ route('user.index') }}">Kembali</a>
+                            <a class="dropdown-item" href="{{ route('product.index') }}">Kembali</a>
 
                         </div>
                     </x-panel.tool-bar>
                 </x-slot>
                 <div class="form-group">
+                    <label for="kode_produk">Kode Produk</label>
+                    <input type="text" readonly name="kode_produk" id="kode_produk" class="form-control"
+                        value="{{ old('kode_produk', $product->kode_produk) }}">
+                    @error('kode_produk')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="name">Nama</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $product->name) }}">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" id="email" class="form-control" value="{{ old('email') }}">
-                    @error('email')
+                    <label for="kuantitas">Kuantitas</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="{{ old('quantity', $product->quantity) }}">
+                    @error('quantity')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control"
-                        value="{{ old('password') }}">
-                    @error('password')
+                    <label for="satuan">Satuan</label>
+                    <input type="text" name="unit" id="unit" class="form-control" value="{{ old('unit', $product->unit) }}">
+                    @error('unit')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="role">Role</label>
-                    <select name="role" id="role" class="form-control" required>
-                        <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin
-                        </option>
-                        <option value="Purchasing" {{ old('role') == 'Purchasing' ? 'selected' : '' }}>Purchasing
-                        </option>
-                        <option value="Gudang" {{ old('role') == 'Gudang' ? 'selected' : '' }}>Gudang
-                        </option>
-                        @error('role')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </select>
+                    <label for="price">Harga</label>
+                    <input type="text" name="price" id="price" class="form-control" value="{{ old('price', $product->price) }}">
+                    @error('price')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <x-slot name="panelcontentfoot">
                     <x-button type="submit" color="primary" :label="__('Save')" class="ml-auto" />

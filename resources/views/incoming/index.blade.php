@@ -1,5 +1,5 @@
 @extends('inc.main')
-@section('title', 'Pengguna')
+@section('title', 'incoming')
 @section('pages-css')
     <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
     <link rel="stylesheet" media="screen, print" href="/admin/css/theme-demo.css">
@@ -9,64 +9,68 @@
 @section('pages-content')
     <main id="js-page-content" role="main" class="page-content">
         @include('inc._page_breadcrumb', [
-            'category_1' => 'Settings',
+            'category_1' => 'Master',
         ])
         <div class="subheader">
             @component('inc._page_heading', [
-                'icon' => 'user',
-                'heading1' => 'Pengguna',
-                'heading2' => 'WebApps',
+                'icon' => 'sign-in',
+                'heading1' => 'Barang Masuk',
+                'heading2' => 'Karoseri',
             ])
             @endcomponent
         </div>
-        <x-panel.show title="Daftar" subtitle="Pengguna WebApps">
+        <x-panel.show title="Daftar" subtitle="Barang Masuk">
             <x-slot name="paneltoolbar">
                 <x-panel.tool-bar>
-                    <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                    <a href="{{ route('incoming.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
                 </x-panel.tool-bar>
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Role</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>image</th>
+                        <th>Tanggal</th>
+                        <th>Kode</th>
+                        <th>Nama Barang</th>
+                        <th>Kuantitas</th>
+                        <th>Satuan</th>
+                        <th>Nama Supplier</th>
+                        {{-- <th>Keterangan</th> --}}
+                        <th>Harga Barang</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($incomings as $incoming)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <span
-                                    class="badge {{ $user->role ? ($user->role == 'Purchasing' ? 'bg-danger' : 'bg-primary') : 'bg-primary' }}">
-                                    {{ $user->role ? $user->role : 'Tidak Tersedia' }}
-                                </span>
+                                {{ $incoming->start_date ? $incoming->start_date : 'No date' }}
                             </td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td>{{ $incoming->kode_penerimaan }}</td>
+                            <td>{{ $incoming->product->name }}</td>
+                            <td>{{ $incoming->kuantitas }}</td>
+                            <td>{{ $incoming->unit }}</td>
+                            {{-- <td>{{ $incoming->keterangan }}</td> --}}
+                            <td>Rp. {{ number_format($incoming->product->price * $incoming->kuantitas, 0, ',', '.') }}</td>
+                            <td>{{ $incoming->supplier->name }}</td>
                             <td>
-                                @if ($user->image == null)
-                                    <span class="badge bg-primary">No Image</span>
-                                @else
-                                    <img src="{{ asset('storage/profile/' . $user->image) }}" alt="{{ $user->name }}"
-                                        style="max-width: 50px">
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('user.show', $user->id) }}" class="btn btn-info">Detail</a>
-                                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
-                                <button type="button" class="btn btn-danger"
-                                    onclick="confirmDelete({{ $user->id }})">Hapus</button>
-                                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}"
-                                    method="POST" style="display:none;">
+                                <div class="btn-group" role="group" aria-label="Incoming Actions">
+                                    <a href="{{ route('incoming.show', $incoming->id) }}"
+                                        class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ route('incoming.edit', $incoming->id) }}"
+                                        class="btn btn-warning btn-sm">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="confirmDelete({{ $incoming->id }})">Hapus</button>
+                                </div>
+                                <form id="delete-form-{{ $incoming->id }}"
+                                    action="{{ route('incoming.destroy', $incoming->id) }}" method="POST"
+                                    style="display:none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>

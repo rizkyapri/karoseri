@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -12,7 +13,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -28,23 +30,49 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3|max:255',
+            'quantity' => 'required|integer',
+            'unit' => 'required|string',
+            'price' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $product = Product::create([
+            'kode_produk' => $request->kode_produk,
+            'name' => $request->name,
+            'quantity' => $request->quantity,
+            'unit' => $request->unit,
+            'price' => $request->price,
+        ]);
+
+        return redirect()->route('product.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product, $id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('product.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Product $product, $id)
     {
-        //
+        $product = Product::find($id);
+
+        // dd($product);
+        return view('product.edit', compact('product'));
     }
 
     /**
@@ -52,7 +80,27 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $old_product = Product::find($request->id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3|max:255',
+            'quantity' => 'required|integer',
+            'unit' => 'required|string',
+            'price' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $product = Product::where('id', $request->id)->update([
+            'name' => $request->name,
+            'quantity' => $request->quantity,
+            'unit' => $request->unit,
+            'price' => $request->price, 
+        ]);
+
+        return redirect()->route('product.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
     /**

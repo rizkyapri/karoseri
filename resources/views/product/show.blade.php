@@ -1,5 +1,5 @@
 @extends('inc.main')
-@section('title', 'Pengguna')
+@section('title', 'Produk')
 @section('pages-css')
     <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
     <link rel="stylesheet" media="screen, print" href="/admin/css/theme-demo.css">
@@ -9,17 +9,16 @@
 @section('pages-content')
     <main id="js-page-content" role="main" class="page-content">
         @include('inc._page_breadcrumb', [
-            'category_1' => 'Settings',
+            'category_1' => 'Master',
         ])
         <div class="subheader">
             @component('inc._page_heading', [
-                'icon' => 'user',
-                'heading1' => 'Pengguna',
-                'heading2' => 'WebApps',
+                'icon' => 'shopping-bag',
+                'heading1' => 'Produk',
+                'heading2' => 'Karoseri',   
             ])
             @endcomponent
         </div>
-
         <x-panel.show title="Default" subtitle="Example">
             <x-slot name="paneltoolbar">
                 <x-panel.tool-bar>
@@ -28,7 +27,7 @@
                         <i class="fal fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('user.index') }}">Kembali</a>
+                        <a class="dropdown-item" href="{{ route('product.index') }}">Kembali</a>
                     </div>
                 </x-panel.tool-bar>
             </x-slot>
@@ -37,31 +36,20 @@
             </x-slot>
             <div class="card">
                 <div class="card-body">
-                    <p><strong>ID users:</strong> {{ $user->id }}</p>
-                    <p><strong>Role:</strong> 
-                    @if($user->role == 'Admin')
-                        <span class="badge bg-danger text-white">Admin</span>
-                    @elseif($user->role == 'Gudang')
-                        <span><span class="badge bg-primary text-white">Gudang</span>
-                    @endif
+                    <p><strong>Kode Produk:</strong> {{ $product->kode_produk }}</p>
+                    <p><strong>Nama:</strong> {{ $product->name }}</p>
+                    <p><strong>Kuantitas:</strong>{{ $product->quantity }}</p>
+                    <p><strong>Satuan:</strong> {{ $product->unit }}</p>
+                    <p><strong>price:</strong>
+                        Rp. {{ number_format($product->price, 0, 2) }}
                     </p>
-                    <p><strong>Nama:</strong> {{ $user->name }}</p>
-                    <p><strong>Email:</strong> {{ $user->email }}</p>
-                    <p><strong>Photo:</strong>
-                        @if ($user->image == null)
-                            <span class="badge bg-primary text-white">No Image</span>
-                        @else
-                            <img class="rounded" src="{{ asset('storage/profile/' . $user->image) }}" alt="{{ $user->name }}"
-                                style="max-width: 50px">
-                        @endif
-                    </p>
-                    <a href="{{ route('user.edit', $user) }}" class="btn btn-primary">Edit</a>
-                    <form action="{{ route('user.destroy', $user) }}" method="POST" style="display:inline;">
+                    <a href="{{ route('product.edit', $product) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('product.destroy', $product) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
-                    <a href="{{ route('user.index') }}" class="btn btn-secondary">Back</a>
+                    <a href="{{ route('product.index') }}" class="btn btn-secondary">Back</a>
                 </div>
             </div>
         </x-panel.show>

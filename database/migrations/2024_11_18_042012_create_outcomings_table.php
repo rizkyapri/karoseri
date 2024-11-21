@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('outcomings', function (Blueprint $table) {
             $table->id();
             $table->integer('id_product')->nullable();
+            $table->integer('creator_id')->nullable();
+            $table->integer('updater_id')->nullable();
             $table->string('unit')->nullable();
-            $table->date('purchase_date')->nullable();
+            $table->string('kode')->nullable();
+            $table->string('bagian')->nullable();
+            $table->string('no_spk')->nullable();
+            $table->datetime('purchase_date')->nullable();
             $table->timestamps();
         });
     }

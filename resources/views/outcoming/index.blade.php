@@ -1,5 +1,5 @@
 @extends('inc.main')
-@section('title', 'Pengguna')
+@section('title', 'outcoming')
 @section('pages-css')
     <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
     <link rel="stylesheet" media="screen, print" href="/admin/css/theme-demo.css">
@@ -9,64 +9,68 @@
 @section('pages-content')
     <main id="js-page-content" role="main" class="page-content">
         @include('inc._page_breadcrumb', [
-            'category_1' => 'Settings',
+            'category_1' => 'Master',
         ])
         <div class="subheader">
             @component('inc._page_heading', [
-                'icon' => 'user',
-                'heading1' => 'Pengguna',
-                'heading2' => 'WebApps',
+                'icon' => 'sign-out',
+                'heading1' => 'Barang Keluar',
+                'heading2' => 'Karoseri',
             ])
             @endcomponent
         </div>
-        <x-panel.show title="Daftar" subtitle="Pengguna WebApps">
+        <x-panel.show title="Daftar" subtitle="Barang Keluar">
             <x-slot name="paneltoolbar">
                 <x-panel.tool-bar>
-                    <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                    <a href="{{ route('outcoming.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
                 </x-panel.tool-bar>
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Role</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>image</th>
+                        <th>Tanggal</th>
+                        <th>Kode</th>
+                        <th>Nama Barang</th>
+                        <th>Kuantitas</th>
+                        <th>Satuan</th>
+                        <th>No SPK</th>
+                        <th>Bagian</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($outcomings as $outcoming)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <span
-                                    class="badge {{ $user->role ? ($user->role == 'Purchasing' ? 'bg-danger' : 'bg-primary') : 'bg-primary' }}">
-                                    {{ $user->role ? $user->role : 'Tidak Tersedia' }}
-                                </span>
+                                {{ $outcoming->purchase_date ? $outcoming->purchase_date : 'No date' }}
                             </td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td>{{ $outcoming->kode }}</td>
+                            <td>{{ $outcoming->product->name }}</td>
+                            <td>{{ $outcoming->quantity }}</td>
+                            <td>{{ $outcoming->unit }}</td>
+                            <td>{{ $outcoming->no_spk }}</td>
+                            <td>{{ $outcoming->bagian }}</td>
                             <td>
-                                @if ($user->image == null)
-                                    <span class="badge bg-primary">No Image</span>
-                                @else
-                                    <img src="{{ asset('storage/profile/' . $user->image) }}" alt="{{ $user->name }}"
-                                        style="max-width: 50px">
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('user.show', $user->id) }}" class="btn btn-info">Detail</a>
-                                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
-                                <button type="button" class="btn btn-danger"
-                                    onclick="confirmDelete({{ $user->id }})">Hapus</button>
-                                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}"
-                                    method="POST" style="display:none;">
+                                <div class="btn-group" role="group" aria-label="outcoming Actions">
+                                    <a href="{{ route('outcoming.show', $outcoming->id) }}"
+                                        class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ route('outcoming.edit', $outcoming->id) }}"
+                                        class="btn btn-warning btn-sm">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="confirmDelete({{ $outcoming->id }})">Hapus</button>
+                                    <a href="{{ route('outcoming.print', $outcoming->id) }}"
+                                        class="btn btn-success btn-sm" target="_blank">Print</a>
+                                </div>
+                                <form id="delete-form-{{ $outcoming->id }}"
+                                    action="{{ route('outcoming.destroy', $outcoming->id) }}" method="POST"
+                                    style="display:none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>

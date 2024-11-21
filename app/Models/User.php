@@ -59,4 +59,13 @@ class User extends Authenticatable
                 ->orWhere('email', 'like', '%' . $search . '%');
         });
     }
+
+    public function incoming()
+    {
+        return $this->belongsToMany(Incoming::class);
+    }
+    public function outcoming()
+    {
+        return $this->belongsToMany(Outcoming::class);
+    }
 }

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsSiswa
+class IsPurchasing
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class IsSiswa
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 'Siswa') {
+        if (!auth()->check() || auth()->user()->role !== 'Purchasing') {
             abort(403);
         }
         return $next($request);

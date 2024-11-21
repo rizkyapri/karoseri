@@ -5,7 +5,32 @@
     </a>
 </li>
 <li class="nav-title">Master</li>
-<li class="{{ Request::is('akademik/*') ? 'active open' : '' }}">
+<li class="{{ Request::is('product/*') ? 'active' : '' }}">
+    <a href="{{ route('product.index') }}" title="Profil Admin" data-filter-tags="admin profil">
+        <i class="fal fa-shopping-bag"></i>
+        <span class="nav-link-text" data-i18n="nav.admin_profil">Produk</span>
+    </a>
+</li>
+<li class="{{ Request::is('supplier/*') ? 'active' : '' }}">
+    <a href="{{ route('supplier.index') }}" title="Profil Admin" data-filter-tags="admin profil">
+        <i class="fa fa-cubes"></i>
+        <span class="nav-link-text" data-i18n="nav.admin_profil">Supplier</span>
+    </a>
+</li>
+<li class="nav-title">Transaksi</li>
+<li class="{{ Request::is('incoming/*') ? 'active' : '' }}">
+    <a href="{{ route('incoming.index') }}" title="Profil Admin" data-filter-tags="admin profil">
+        <i class="fa fa-sign-in"></i>
+        <span class="nav-link-text" data-i18n="nav.admin_profil">Barang Masuk</span>
+    </a>
+</li>
+<li class="{{ Request::is('outcoming/*') ? 'active' : '' }}">
+    <a href="{{ route('outcoming.index') }}" title="Profil Admin" data-filter-tags="admin profil">
+        <i class="fa fa-sign-out"></i>
+        <span class="nav-link-text" data-i18n="nav.admin_profil">Barang Keluar</span>
+    </a>
+</li>
+{{-- <li class="{{ Request::is('akademik/*') ? 'active open' : '' }}">
     <a href="#" title="Akademik" data-filter-tags="akademik">
         <i class="fal fa-briefcase"></i>
         <span class="nav-link-text" data-i18n="nav.akademik">Akademik</span>
@@ -60,8 +85,7 @@
     </a>
     <ul>
         <li class="{{ Request::is('kurikulum/tahun_ajaran*') ? 'active' : '' }}">
-            <a href="{{ route('tahun_ajaran.index') }}" title="Tahun Ajaran"
-                data-filter-tags="kurikulum tahunajaran">
+            <a href="{{ route('tahun_ajaran.index') }}" title="Tahun Ajaran" data-filter-tags="kurikulum tahunajaran">
                 <span class="nav-link-text" data-i18n="nav.kurikulum_tahunajaran">Tahun Ajaran</span>
             </a>
         </li>
@@ -118,6 +142,7 @@
             </a>
         </li>
     </ul>
+</li> --}}
 <li class="nav-title">Settings</li>
 <li class="{{ Request::is('user/*') ? 'active open' : '' }}">
     <a href="#" title="Pengguna" data-filter-tags="Pengguna">
@@ -161,7 +186,8 @@
             </a>
         </li>
         <li class="{{ Request::is('tools/backup_database*') ? 'active' : '' }}">
-            <a href="{{ route('backup_database') }}" title="Backup Database" data-filter-tags="tools backup database">
+            <a href="{{ route('backup_database') }}" title="Backup Database"
+                data-filter-tags="tools backup database">
                 <span class="nav-link-text" data-i18n="nav.tools_backup_database">Backup Database</span>
             </a>
         </li>
