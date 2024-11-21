@@ -20,13 +20,16 @@ use Illuminate\Support\Facades\Route;
 });
  */
 
-
-Route::middleware('admin')->prefix('incoming')->group(function () {
-    Route::get('/index', [IncomingController::class, 'index'])->name('incoming.index');
-    Route::get('/create', [IncomingController::class, 'create'])->name('incoming.create');
-    Route::post('/create', [IncomingController::class, 'store'])->name('incoming.store');
-    Route::get('/show/{id}', [IncomingController::class, 'show'])->name('incoming.show');
-    Route::get('/edit/{id}', [IncomingController::class, 'edit'])->name('incoming.edit');
-    Route::put('/{id}', [IncomingController::class, 'update'])->name('incoming.update');
-    Route::delete('/{id}', [IncomingController::class, 'destroy'])->name('incoming.destroy');
+Route::middleware('auth')->group(function () {
+    Route::middleware('role:Admin|Gudang|Purchasing')->prefix('incoming')->group(function () {
+        Route::get('/index', [IncomingController::class, 'index'])->name('incoming.index');
+    });
+    Route::middleware('role:Admin|Gudang')->prefix('incoming')->group(function () {
+        Route::get('/create', [IncomingController::class, 'create'])->name('incoming.create');
+        Route::post('/create', [IncomingController::class, 'store'])->name('incoming.store');
+        Route::get('/show/{id}', [IncomingController::class, 'show'])->name('incoming.show');
+        Route::get('/edit/{id}', [IncomingController::class, 'edit'])->name('incoming.edit');
+        Route::put('/{id}', [IncomingController::class, 'update'])->name('incoming.update');
+        Route::delete('/{id}', [IncomingController::class, 'destroy'])->name('incoming.destroy');
+    });
 });

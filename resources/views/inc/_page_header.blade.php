@@ -3,7 +3,8 @@
     <div class="page-logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative"
             data-toggle="modal" data-target="#modal-shortcut">
-            <img src="/admin/img/{{ asset($profileApp->app_logo) ?? '' }}" alt="{{ $profileApp->app_nama ?? '' }} WebApp"
+            <img src="{{ isset($profileApp->app_logo) && $profileApp->app_logo ? asset($profileApp->app_logo) : asset('admin/img/logoTRB.png') }}"
+                alt="{{ isset($profileApp->app_nama) && $profileApp->app_nama ? $profileApp->app_nama . ' WebApp' : 'Karoseri WebApp' }}"
                 aria-roledescription="logo">
             <span class="page-logo-text mr-1">{{ $profileApp->app_nama ?? '' }}</span>
             <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
@@ -64,7 +65,8 @@
             <a href="#" data-toggle="dropdown" title="drlantern@gotbootstrap.com"
                 class="header-icon d-flex align-items-center justify-content-center ml-2">
                 @if (auth()->user()->image)
-                    <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" style="width: 30px; height: 30px;" class="profile-image rounded-circle"
+                    <img src="{{ asset('storage/profile/' . auth()->user()->image) }}"
+                        style="width: 30px; height: 30px;" class="profile-image rounded-circle"
                         alt="{{ auth()->user()->name }}">
                 @else
                     <img src="/admin/img/users/user.jpg" class="profile-image rounded-circle"
@@ -113,13 +115,16 @@
                         </div>
                         <div class="dropdown-menu">
                             <a href="#?lang=fr" class="dropdown-item" data-action="lang" data-lang="fr">Français</a>
-                            <a href="#?lang=en" class="dropdown-item active" data-action="lang" data-lang="en">English (US)</a>
+                            <a href="#?lang=en" class="dropdown-item active" data-action="lang"
+                                data-lang="en">English (US)</a>
                             <a href="#?lang=es" class="dropdown-item" data-action="lang" data-lang="es">Español</a>
-                            <a href="#?lang=ru" class="dropdown-item" data-action="lang" data-lang="ru">Русский язык</a>
+                            <a href="#?lang=ru" class="dropdown-item" data-action="lang" data-lang="ru">Русский
+                                язык</a>
                             <a href="#?lang=jp" class="dropdown-item" data-action="lang" data-lang="jp">日本語</a>
                             <a href="#?lang=ch" class="dropdown-item" data-action="lang" data-lang="ch">中文</a>
-                            <a href="#?lang=id" class="dropdown-item" data-action="lang" data-lang="id">Bahasa Indonesia</a>
-                        </div>                        
+                            <a href="#?lang=id" class="dropdown-item" data-action="lang" data-lang="id">Bahasa
+                                Indonesia</a>
+                        </div>
                     </div>
                 @endif
                 @if (auth()->user()->role !== 'Admin')

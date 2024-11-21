@@ -22,7 +22,9 @@
         <x-panel.show title="Daftar" subtitle="Produk Karoseri">
             <x-slot name="paneltoolbar">
                 <x-panel.tool-bar>
+                    @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
                     <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                    @endif
                 </x-panel.tool-bar>
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
@@ -32,7 +34,9 @@
                         <th>Nama</th>
                         <th>PIC</th>
                         <th>Phone</th>
+                        @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
                         <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +48,7 @@
                             </td>
                             <td>{{ $supplier->pic }}</td>
                             <td>{{ $supplier->phone }}</td>
+                            @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
                             <td>
                                 <a href="{{ route('supplier.show', $supplier->id) }}" class="btn btn-info">Detail</a>
                                 <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-warning">Edit</a>
@@ -55,6 +60,7 @@
                                     @method('DELETE')
                                 </form>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

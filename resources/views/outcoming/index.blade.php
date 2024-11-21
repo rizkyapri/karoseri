@@ -53,22 +53,27 @@
                             <td>{{ $outcoming->no_spk }}</td>
                             <td>{{ $outcoming->bagian }}</td>
                             <td>
-                                <div class="btn-group" role="group" aria-label="outcoming Actions">
-                                    <a href="{{ route('outcoming.show', $outcoming->id) }}"
-                                        class="btn btn-info btn-sm">Detail</a>
-                                    <a href="{{ route('outcoming.edit', $outcoming->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        onclick="confirmDelete({{ $outcoming->id }})">Hapus</button>
-                                    <a href="{{ route('outcoming.print', $outcoming->id) }}"
-                                        class="btn btn-success btn-sm" target="_blank">Print</a>
-                                </div>
-                                <form id="delete-form-{{ $outcoming->id }}"
-                                    action="{{ route('outcoming.destroy', $outcoming->id) }}" method="POST"
-                                    style="display:none;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
+                                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
+                                    <div class="btn-group" role="group" aria-label="outcoming Actions">
+                                        <a href="{{ route('outcoming.show', $outcoming->id) }}"
+                                            class="btn btn-info btn-sm">Detail</a>
+                                        <a href="{{ route('outcoming.edit', $outcoming->id) }}"
+                                            class="btn btn-warning btn-sm">Edit</a>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            onclick="confirmDelete({{ $outcoming->id }})">Hapus</button>
+                                        <a href="{{ route('outcoming.print', $outcoming->id) }}"
+                                            class="btn btn-success btn-sm" target="_blank">Print</a>
+                                    </div>
+                                    <form id="delete-form-{{ $outcoming->id }}"
+                                        action="{{ route('outcoming.destroy', $outcoming->id) }}" method="POST"
+                                        style="display:none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                @else
+                                    <a href="{{ route('outcoming.print', $outcoming->id) }}" class="btn btn-success btn-sm"
+                                        target="_blank">Print</a>
+                                @endif
                             </td>
 
                         </tr>

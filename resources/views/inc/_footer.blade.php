@@ -1,10 +1,7 @@
 <footer class="page-footer" role="contentinfo">
     <div class="d-flex align-items-center flex-1 text-muted">
         <span class="hidden-md-down fw-700">{{ $profileApp->app_tahun ?? '' }} - @php echo date('Y'); @endphp ©
-            {{ $profileApp->app_pengembang ?? '' }}
-            by&nbsp;<a href="https://laravel.com/docs/10.x" title='laravel.com' class="btn-link font-weight-bold"
-                target="_blank">Laravel
-                v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</a></span>
+            {{ $profileApp->app_pengembang ?? '' }}</span>
     </div>
     <div>
         <ul class="list-table m-0">

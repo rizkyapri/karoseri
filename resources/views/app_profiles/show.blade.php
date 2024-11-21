@@ -38,22 +38,22 @@
                         <tr>
                             <th>Nama</th>
                             <td>:</td>
-                            <td>{{ $appProfile->app_nama }}</td>
+                            <td>{{ $appProfile->app_nama ?? 'Data tidak tersedia' }}</td>
                         </tr>
                         <tr>
                             <th>Deskripsi</th>
                             <td>:</td>
-                            <td>{{ $appProfile->app_deskripsi }}</td>
+                            <td>{{ $appProfile->app_deskripsi ?? 'Data tidak tersedia' }}</td>
                         </tr>
                         <tr>
                             <th>Tahun</th>
                             <td>:</td>
-                            <td>{{ $appProfile->app_tahun }}</td>
+                            <td>{{ $appProfile->app_tahun ?? 'Data tidak tersedia' }}</td>
                         </tr>
                         <tr>
                             <th>Pengembang</th>
                             <td>:</td>
-                            <td>{{ $appProfile->app_pengembang }}</td>
+                            <td>{{ $appProfile->app_pengembang ?? 'Data tidak tersedia' }}</td>
                         </tr>
                     </table>
                 </x-slot>
@@ -61,12 +61,24 @@
                     <tr>
                         <th style="align-content: center">Icon</th>
                         <td style="align-content: center">:</td>
-                        <td><img src="{{ asset('admin/img/' . $appProfile->app_icon) }}" alt="Icon" width="50"></td>
+                        <td>
+                            @if (!empty($appProfile->app_icon))
+                                <img src="{{ asset('admin/img/' . $appProfile->app_icon) }}" alt="Icon" width="50">
+                            @else
+                                <span>Icon tidak tersedia</span>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th style="align-content: center">Logo</th>
                         <td style="align-content: center">:</td>
-                        <td><img src="{{ asset('admin/img/' . $appProfile->app_logo) }}" alt="Logo" width="50"></td>
+                        <td>
+                            @if (!empty($appProfile->app_logo))
+                                <img src="{{ asset('admin/img/' . $appProfile->app_logo) }}" alt="Logo" width="50">
+                            @else
+                                <span>Logo tidak tersedia</span>
+                            @endif
+                        </td>
                     </tr>
                 </table>
                 <x-slot name="Content2">

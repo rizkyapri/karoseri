@@ -21,9 +21,11 @@
         </div>
         <x-panel.show title="Daftar" subtitle="Barang Masuk">
             <x-slot name="paneltoolbar">
+                @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
                 <x-panel.tool-bar>
                     <a href="{{ route('incoming.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
                 </x-panel.tool-bar>
+                @endif
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                 <thead>
@@ -36,8 +38,10 @@
                         <th>Satuan</th>
                         <th>Nama Supplier</th>
                         {{-- <th>Keterangan</th> --}}
+                        @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
                         <th>Harga Barang</th>
                         <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -52,8 +56,9 @@
                             <td>{{ $incoming->kuantitas }}</td>
                             <td>{{ $incoming->unit }}</td>
                             {{-- <td>{{ $incoming->keterangan }}</td> --}}
-                            <td>Rp. {{ number_format($incoming->product->price * $incoming->kuantitas, 0, ',', '.') }}</td>
                             <td>{{ $incoming->supplier->name }}</td>
+                            @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
+                            <td>Rp. {{ number_format($incoming->product->price * $incoming->kuantitas, 0, ',', '.') }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Incoming Actions">
                                     <a href="{{ route('incoming.show', $incoming->id) }}"
@@ -70,6 +75,7 @@
                                     @method('DELETE')
                                 </form>
                             </td>
+                            @endif
 
                         </tr>
                     @endforeach

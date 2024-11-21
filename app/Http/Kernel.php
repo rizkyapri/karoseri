@@ -65,13 +65,13 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
-        'walas' => \App\Http\Middleware\IsWaliKelas::class,
-        'gmp' => \App\Http\Middleware\IsPurchasing::class,
-        'siswa' => \App\Http\Middleware\IsGudang::class,
+        'purchasing' => \App\Http\Middleware\IsPurchasing::class,
+        'gudang' => \App\Http\Middleware\IsGudang::class,
     ];
 
     protected $routeMiddleware = [
         // middleware lainnya
         'check.role.status' => \App\Http\Middleware\CheckRoleStatus::class,
+        'role' => \App\Http\Middleware\CheckRole::class,
     ];
 }

@@ -42,27 +42,27 @@
                                 <th>Nama</th>
                                 <td>:</td>
                                 <td><input type="text" name="app_nama" class="form-control"
-                                        value="{{ $appProfile->app_nama }}" required></td>
+                                        value="{{ $appProfile->app_nama ?? '' }}" required></td>
                             </tr>
                             <tr>
                                 <th>Deskripsi</th>
                                 <td>:</td>
                                 <td>
-                                    <textarea name="app_deskripsi" class="form-control" required>{{ $appProfile->app_deskripsi }}</textarea>
+                                    <textarea name="app_deskripsi" class="form-control" required>{{ $appProfile->app_deskripsi ?? '' }}</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Tahun</th>
                                 <td>:</td>
                                 <td><input type="number" name="app_tahun" class="form-control"
-                                        value="{{ $appProfile->app_tahun }}" required min="1900"
+                                        value="{{ $appProfile->app_tahun ?? '' }}" required min="1900"
                                         max="{{ date('Y') + 1 }}"></td>
                             </tr>
                             <tr>
                                 <th>Pengembang</th>
                                 <td>:</td>
                                 <td><input type="text" name="app_pengembang" class="form-control"
-                                        value="{{ $appProfile->app_pengembang }}" required></td>
+                                        value="{{ $appProfile->app_pengembang ?? '' }}" required></td>
                             </tr>
                         </table>
                     </x-slot>
@@ -71,21 +71,33 @@
                             <th>Icon</th>
                             <td>:</td>
                             <td><input type="file" name="app_icon" class="form-control"></td>
-                            <td><img src="{{ asset('admin/img/' . $appProfile->app_icon) }}" alt="Icon" width="50">
+                            <td>
+                                @if (!empty($appProfile->app_icon))
+                                    <img src="{{ asset('admin/img/' . $appProfile->app_icon) }}" alt="Icon"
+                                        width="50">
+                                @else
+                                    <span>Icon tidak tersedia</span>
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <th>Logo</th>
                             <td>:</td>
                             <td><input type="file" name="app_logo" class="form-control"></td>
-                            <td style="align-content: center"><img src="{{ asset('admin/img/' . $appProfile->app_logo) }}"
-                                    alt="Logo" width="50">
+                            <td style="align-content: center">
+                                @if (!empty($appProfile->app_logo))
+                                    <img src="{{ asset('admin/img/' . $appProfile->app_logo) }}" alt="Logo"
+                                        width="50">
+                                @else
+                                    <span>Logo tidak tersedia</span>
+                                @endif
                             </td>
                         </tr>
                     </table>
                     <x-slot name="Content2">
                     </x-slot>
                 </x-col>
+
                 <x-slot name="panelcontentfoot">
                     <x-button type="submit" color="primary" :label="__('Update')" class="ml-auto" />
                 </x-slot>

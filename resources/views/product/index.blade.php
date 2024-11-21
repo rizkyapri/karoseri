@@ -22,7 +22,9 @@
         <x-panel.show title="Daftar" subtitle="Produk Karoseri">
             <x-slot name="paneltoolbar">
                 <x-panel.tool-bar>
+                    @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
                     <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                    @endif
                 </x-panel.tool-bar>
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
@@ -34,7 +36,9 @@
                         <th>Kuantitas</th>
                         <th>Satuan</th>
                         <th>Harga</th>
+                        @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
                         <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +52,7 @@
                             <td>{{ $product->quantity }}</td>
                             <td>{{ $product->unit }}</td>
                             <td>Rp. {{ number_format($product->price, 0, 2) }}</td>
+                            @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
                             <td>
                                 <a href="{{ route('product.show', $product->id) }}" class="btn btn-info">Detail</a>
                                 <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning">Edit</a>
@@ -59,6 +64,7 @@
                                     @method('DELETE')
                                 </form>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

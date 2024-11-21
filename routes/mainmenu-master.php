@@ -59,44 +59,11 @@ Route::middleware('admin')->prefix('tools')->group(function () {
 });
 
 //Profil Admin
-Route::middleware('admin')->prefix('profile')->group(function () {
-    Route::get('/profil_admin', [MasterController::class, 'master_profil'])->name('profil_admin');
-    Route::get('/profil_admin/edit', [MasterController::class, 'master_profil_edit'])->name('profil_admin.edit');
-    Route::put('/profil_admin', [MasterController::class, 'master_profil_update'])->name('profil_admin.update');
-});
-//AKADEMIK
-Route::middleware('admin')->prefix('akademik')->group(function () {
-
-    Route::get('profil-sekolah', [ProfilSekolahController::class, 'show'])->name('profil-sekolah.index');
-    Route::get('profil-sekolah/edit', [ProfilSekolahController::class, 'edit'])->name('profil-sekolah.edit');
-    Route::put('profil-sekolah', [ProfilSekolahController::class, 'update'])->name('profil-sekolah.update');
-
-    Route::resource('kompetensi-keahlian', KompetensiKeahlianController::class);
-
-    Route::resource('tenaga_pendidik', DataGuruController::class);
-
-    //Route::get('/indentitas_sekolah', [MasterController::class, 'akademik_indentitas_sekolah'])->name('indentitas_sekolah');
-    //Route::get('/tenaga_pendidik', [MasterController::class, 'akademik_tenaga_pendidik'])->name('tenaga_pendidik');
-    Route::get('/paket_keahlian', [MasterController::class, 'akademik_paket_keahlian'])->name('paket_keahlian');
-    Route::get('/mata_pelajaran', [MasterController::class, 'akademik_mata_pelajaran'])->name('mata_pelajaran');
-    Route::get('/capaian_pembelajaran', [MasterController::class, 'akademik_capaian_pembelajaran'])->name('capaian_pembelajaran');
-    Route::get('/kelas_walikelas', [MasterController::class, 'akademik_kelas_walikelas'])->name('kelas_walikelas');
-    Route::get('/peserta_didik', [MasterController::class, 'akademik_peserta_didik'])->name('peserta_didik');
-});
-
-
-//kurikulum
-Route::middleware('admin')->prefix('kurikulum')->group(function () {
-
-    Route::resource('tahun_ajaran', TahunAjaranController::class);
-
-    Route::get('/versi', [MasterController::class, 'kurikulum_versi'])->name('versi');
-    //Route::get('/tahunajaran', [MasterController::class, 'kurikulum_tahunajaran'])->name('tahunajaran');
-    Route::get('/pengumuman', [MasterController::class, 'kurikulum_pengumuman'])->name('pengumuman');
-    Route::get('/perakat_ujian', [MasterController::class, 'kurikulum_perakat_ujian'])->name('perakat_ujian');
-    Route::get('/proses_kbm_perkelas', [MasterController::class, 'kurikulum_proses_kbm_perkelas'])->name('proses_kbm_perkelas');
-    Route::get('/proses_kbm_perguru', [MasterController::class, 'kurikulum_proses_kbm_perguru'])->name('proses_kbm_perguru');
-    Route::get('/proses_kbm_remedial', [MasterController::class, 'kurikulum_proses_kbm_remedial'])->name('proses_kbm_remedial');
-    Route::get('/cetak_rapor', [MasterController::class, 'kurikulum_cetak_rapor'])->name('cetak_rapor');
-    Route::get('/transkrip_nilai', [MasterController::class, 'kurikulum_transkrip_nilai'])->name('transkrip_nilai');
+// groups middleware
+Route::middleware('auth')->group(function () {
+    Route::middleware('role:Admin|Purchasing|Gudang')->prefix('profile')->group(function () {
+        Route::get('/profil_admin', [MasterController::class, 'master_profil'])->name('profil_admin');
+        Route::get('/profil_admin/edit', [MasterController::class, 'master_profil_edit'])->name('profil_admin.edit');
+        Route::put('/profil_admin', [MasterController::class, 'master_profil_update'])->name('profil_admin.update');
+    });
 });

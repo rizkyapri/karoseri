@@ -12,15 +12,6 @@ class CheckRoleStatus
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $roleStatus = OpsiLogin::where('peran', $user->role)->first();
-
-            if ($roleStatus && $roleStatus->aktif === 'N') {
-                Auth::logout();
-                return back()->with('error', 'Peran Anda sedang dinonaktifkan. Silakan hubungi administrator.');
-            }
-        }
 
         return $next($request);
     }

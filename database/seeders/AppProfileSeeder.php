@@ -15,12 +15,12 @@ class AppProfileSeeder extends Seeder
     {
         DB::table('app_profiles')->insert([
             [
-                'app_nama' => 'Repalogic',
+                'app_nama' => 'Karoseri',
                 'app_deskripsi' => 'Dashboard yang bisa di gunakan untuk manajemen aplikasi',
-                'app_tahun' => 2019,
-                'app_pengembang' => 'Team SKAONE',
-                'app_icon' => 'topi-toga-abu-32.png',
-                'app_logo' => 'logosmk-big.png',
+                'app_tahun' => 2024,
+                'app_pengembang' => 'Team K2 NEXUS',
+                'app_icon' => 'logoTRB.png',
+                'app_logo' => 'logoTRB.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -9,11 +9,11 @@
     @if (auth()->user()->role == 'Admin')
         @include('inc.mainmenu._menu_master')
     @endif
-    @if (auth()->user()->role == 'Wali Kelas')
-        @include('inc.mainmenu._menu_walikelas')
+    @if (auth()->user()->role == 'Purchasing')
+        @include('inc.mainmenu._menu_purchasing')
     @endif
-    @if (auth()->user()->role == 'Guru Mapel')
-        @include('inc.mainmenu._menu_gurumapel')
+    @if (auth()->user()->role == 'Gudang')
+        @include('inc.mainmenu._menu_gudang')
     @endif
     @if (auth()->user()->role == 'Siswa')
         @include('inc.mainmenu._menu_siswa')
