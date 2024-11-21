@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('id_product')->nullable();
             $table->integer('creator_id')->nullable();
             $table->integer('updater_id')->nullable();
+            $table->string('quantity')->nullable();
             $table->string('unit')->nullable();
             $table->string('kode')->nullable();
             $table->string('bagian')->nullable();

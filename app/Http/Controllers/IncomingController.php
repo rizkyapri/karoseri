@@ -6,6 +6,7 @@ use App\Models\Incoming;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class IncomingController extends Controller
@@ -53,7 +54,7 @@ class IncomingController extends Controller
             'id_user' => $request->id_user,
             'id_product' => $request->id_product,
             'id_supplier' => $request->id_supplier,
-            'creator_id' => auth()->id(),
+            'creator_id' => Auth::user()->id,
             'kode_penerimaan' => $request->kode_masuk,
             'kuantitas' => $request->quantity,
             'unit' => $request->unit,
@@ -108,7 +109,7 @@ class IncomingController extends Controller
         Incoming::where('id', $id)->update([
             'id_product' => $request->id_product,
             'id_supplier' => $request->id_supplier,
-            'updater_id' => auth()->id(),
+            'updater_id' => Auth::user()->id,
             'kode_penerimaan' => $request->kode_masuk,
             'kuantitas' => $request->quantity,
             'unit' => $request->unit,
