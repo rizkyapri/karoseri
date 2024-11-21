@@ -35,7 +35,7 @@ class IncomingController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $validation = Validator::make($request->all(), [
             'id_supplier' => 'required|integer',
             'id_product' => 'required|integer',
