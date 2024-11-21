@@ -62,6 +62,8 @@
                     <select name="role" id="role" class="form-control" required>
                         <option value="Admin" {{ old('role', $users->role) == 'Admin' ? 'selected' : '' }}>Admin
                         </option>
+                        <option value="Purchasing" {{ old('role') == 'Purchasing' ? 'selected' : '' }}>Purchasing
+                        </option>
                         <option value="Gudang" {{ old('role', $users->role) == 'Gudang' ? 'selected' : '' }}>Gudang
                         </option>
                         @error('role')
