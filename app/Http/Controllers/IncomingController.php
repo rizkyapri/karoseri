@@ -35,8 +35,8 @@ class IncomingController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $validation = Validator::make($request->all(), [
-            'id_user' => 'required|integer',
             'id_supplier' => 'required|integer',
             'id_product' => 'required|integer',
             'kode_masuk' => 'required|string|min:3|max:255',
@@ -51,7 +51,6 @@ class IncomingController extends Controller
         }
 
         Incoming::create([
-            'id_user' => $request->id_user,
             'id_product' => $request->id_product,
             'id_supplier' => $request->id_supplier,
             'creator_id' => Auth::user()->id,
