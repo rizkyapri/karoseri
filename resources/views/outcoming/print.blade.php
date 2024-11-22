@@ -70,23 +70,6 @@
             margin-bottom: 20px;
         }
 
-        /* table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            border: 1px solid #000;
-        } */
-
-        /* th,
-        td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        } */
         .th-3 {
             background-color: #adabab;
             border: 1px solid #000;
@@ -139,6 +122,8 @@
             text-align: center;
             font-size: 12px;
             width: 70%;
+            padding-right: 30px;
+            padding-left: 28px;
         }
 
         .td-right {
@@ -146,6 +131,8 @@
             border-top: none;
             text-align: left;
             font-size: 12px;
+            padding-right: 40px;
+            padding-left: 31px;
             /* Untuk merapikan teks di kanan */
         }
 
@@ -208,7 +195,7 @@
     <table style="border: solid 4px; border-collapse: collapse;">
         <tr>
             <td style="border-right: none; padding: 10px;" colspan="1">
-                <img src="{{ public_path('admin/img/logoTRB.png') }}" alt="Logo Perusahaan"
+                <img src="admin/img/logoTRB.png" alt="Logo Perusahaan"
                     style="max-width: 90px; height: auto;">
             </td>
             <td style="text-align: center; padding: 10px;" colspan="5">
@@ -344,9 +331,39 @@
         </tr>
     </table>
 
+    <div class="note">
+        <p>*Note:</p>
+        <ul style="list-style-type: none; margin: 0px;">
+            <li>- PAYMENT: 60 HARI, DARI SETELAH TUKAR FAKTUR</li>
+            <li>- JIKA BARANG TIDAK SESUAI MAKA AKAN DIKEMBALIKAN / DITOLAK</li>
+            <li>- <b>NPWP: 39.551.728.7-451.000</b></li>
+            <li>- <b>Kirim ke Alamat:</b></li>
+            <ul>
+                <li style="list-style-type: none; margin: 0px;">PT. TRI RESTU BERSAMA</li>
+                <li style="list-style-type: none; margin: 0px;">Kp. Bungaok, Desa Caringin, Kec. Legok</li>
+                <li style="list-style-type: none; margin: 0px;">Kab. Tangerang Banten, 15820</li>
+            </ul>
+        </ul>
+    </div>
 
 
-    {{-- <tr>
+    <table class="signature-table">
+        <tr>
+            <td class="left">
+                <p><b>Purchase by:</b></p>
+                <img src="admin/img/signature.png" alt="Signature">
+                <p style="text-decoration: underline;"><b>Annisa</b></p>
+                <p><b>Purchasing</b></p>
+            </td>
+            <td class="right">
+                <p><b>Approval Vendor:</b></p>
+                <p style="margin-top: 60px;"><b>____________________</b></p> <!-- Jarak lebih lebar -->
+                <p style="margin-top: 10px;"><b>Name, Sign, Stamp</b></p>
+            </td>
+        </tr>
+    </table>
+
+        {{-- <tr>
         <td style="border: 1px solid black; ">2</td>
         <td style="border: 1px solid black; ">MECHANISM DDH 201L</td>
         <td style="border: 1px solid black; ">1</td>
@@ -442,39 +459,6 @@
         <td style="border: 1px solid black; ">1.000.000 Rp</td>
         <td style="border: 1px solid black; ">1.000.000 Rp</td>
     </tr> --}}
-
-
-    <div class="note">
-        <p>*Note:</p>
-        <ul style="list-style-type: none; margin: 0px;">
-            <li>- PAYMENT: 60 HARI, DARI SETELAH TUKAR FAKTUR</li>
-            <li>- JIKA BARANG TIDAK SESUAI MAKA AKAN DIKEMBALIKAN / DITOLAK</li>
-            <li>- <b>NPWP: 39.551.728.7-451.000</b></li>
-            <li>- <b>Kirim ke Alamat:</b></li>
-            <ul>
-                <li style="list-style-type: none; margin: 0px;">PT. TRI RESTU BERSAMA</li>
-                <li style="list-style-type: none; margin: 0px;">Kp. Bungaok, Desa Caringin, Kec. Legok</li>
-                <li style="list-style-type: none; margin: 0px;">Kab. Tangerang Banten, 15820</li>
-            </ul>
-        </ul>
-    </div>
-
-
-    <table class="signature-table">
-        <tr>
-            <td class="left">
-                <p><b>Purchase by:</b></p>
-                <img src="{{ public_path('admin/img/signature.png') }}" alt="Signature">
-                <p style="text-decoration: underline;"><b>Annisa</b></p>
-                <p><b>Purchasing</b></p>
-            </td>
-            <td class="right">
-                <p><b>Approval Vendor:</b></p>
-                <p style="margin-top: 60px;"><b>____________________</b></p> <!-- Jarak lebih lebar -->
-                <p style="margin-top: 10px;"><b>Name, Sign, Stamp</b></p>
-            </td>
-        </tr>
-    </table>
     {{-- <footer>
         <p>PT. TRI RESTU BERSAMA</p>
         <p>Specialist Body Builder Vehicle, Dump Truck, Tank and Other Special Purpose Vehicle</p>

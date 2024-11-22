@@ -27,7 +27,7 @@
                                 <div class="d-flex flex-column align-items-center justify-content-center p-4">
                                     <!-- Gambar profil berbentuk lingkaran -->
                                     <label for="image" class="position-relative">
-                                        <img id="profileImage" src="{{ asset('storage/profile/' . auth()->user()->image) }}"
+                                        <img id="profileImage" src="{{ auth()->user()->image ? asset('storage/profile/' . auth()->user()->image) : asset('admin/img/users/user.jpg') }}"
                                             class="rounded-circle shadow-2 img-thumbnail transition-transform duration-300 ease-in-out transform hover:scale-125"
                                             style="width: 120px; height: 120px;">
                                         <!-- Icon untuk mengganti gambar -->
@@ -40,13 +40,15 @@
                                     <input type="file" id="image" name="image" class="d-none" accept="image/*"
                                         onchange="previewImage(event)">
                                     <h5 class="mb-0 fw-700 text-center mt-3">
+                                        <label for="name">Username</label>
                                         <input type="text" name="name" value="{{ auth()->user()->name }}"
                                             class="form-control text-center">
                                     </h5>
-                                    <small class="text-muted mb-0">
+                                    <h5 class="text-center fw-700 mt-3 mb-0">
+                                        <label for="email">Email</label>
                                         <input type="email" name="email" value="{{ auth()->user()->email }}"
                                             class="form-control text-center">
-                                    </small>
+                                    </h5>
                                 </div>
                             </div>
                         </div>

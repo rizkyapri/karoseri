@@ -22,15 +22,42 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $lastProduct = Product::orderBy('id', 'desc')->first();
+
+        if ($lastProduct) {
+            $lastCode = $lastProduct->kode_produk;
+            $lastNumber = (int) substr($lastCode, 4);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1;
+        }
+
+        $newCode = 'BRG-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+
+        return view('product.create', compact('newCode'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        // Ambil kode terakhir dari database
+        $lastProduct = Product::orderBy('id', 'desc')->first();
+
+        if ($lastProduct) {
+            // Ambil kode terakhir dan pecahkan
+            $lastCode = $lastProduct->kode_produk; // Contoh: BRG-0004
+            $lastNumber = (int) substr($lastCode, 4); // Ambil bagian numerik: 0004
+            $newNumber = $lastNumber + 1; // Tambahkan 1
+        } else {
+            // Jika belum ada data, mulai dari 1
+            $newNumber = 1;
+        }
+
+        // Format kode baru
+        $kodeProdukBaru = 'BRG-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3|max:255',
@@ -44,7 +71,7 @@ class ProductController extends Controller
         }
 
         $product = Product::create([
-            'kode_produk' => $request->kode_produk,
+            'kode_produk' => $kodeProdukBaru,
             'name' => $request->name,
             'quantity' => $request->quantity,
             'unit' => $request->unit,
@@ -97,7 +124,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'quantity' => $request->quantity,
             'unit' => $request->unit,
-            'price' => $request->price, 
+            'price' => $request->price,
         ]);
 
         return redirect()->route('product.index')->with('success', 'Produk berhasil diperbarui.');

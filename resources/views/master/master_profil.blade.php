@@ -37,7 +37,7 @@
                         <div class="col-12">
                             <div class="d-flex flex-column align-items-center justify-content-center p-4">
                                 {{-- @dd(asset('public/storage/' . auth()->user()->image)) --}}
-                                <img src="{{ asset('storage/profile/' . auth()->user()->image) }}"
+                                <img src="{{ auth()->user()->image ? asset('storage/profile/' . auth()->user()->image) : asset('admin/img/users/user.jpg') }}"
                                     class="rounded-circle shadow-2 img-thumbnail transition-transform duration-300 ease-in-out transform hover:scale-125"
                                     style="width: 120px; height: 120px;" alt="User Profile Picture">
                                 <h5 class="mb-0 fw-700 text-center mt-3">

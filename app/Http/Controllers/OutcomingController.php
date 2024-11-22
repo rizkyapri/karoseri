@@ -6,6 +6,7 @@ use App\Models\Outcoming;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OutcomingController extends Controller
@@ -38,7 +39,7 @@ class OutcomingController extends Controller
             'tanggal' => 'required',
             'unit' => 'required|string',
             'kode_keluar' => 'required|string|min:3|max:255',
-            'quantity' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
             'bagian' => 'required|string',
             'no_spk' => 'required|string',
         ]);
@@ -57,8 +58,18 @@ class OutcomingController extends Controller
             'bagian' => $request->bagian,
             'no_spk' => $request->no_spk,
         ]);
+        // Update the product's stock
+        $product = Product::find($request->id_product);
+        // dd($product);
 
-        return redirect()->route('outcoming.index')->with('success', 'Data Berhasil Ditambahkan');
+        if ($product) {
+            $product->quantity -= $request->quantity;
+            $product->save();
+
+            return redirect()->route('outcoming.index')->with('success', 'Data Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('outcoming.index')->with('error', 'Data Gagal Ditambahkan');
+        }
     }
 
     /**
@@ -100,9 +111,34 @@ class OutcomingController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
+        // Temukan data barang masuk berdasarkan ID
+        $outcoming = Outcoming::find($id);
+        if (!$outcoming) {
+            return redirect()->route('outcoming.index')->with('error', 'Barang Masuk tidak ditemukan.');
+        }
+
+        // Temukan produk yang terkait
+        $product = Product::find($outcoming->id_product);
+        if (!$product) {
+            return redirect()->route('outcoming.index')->with('error', 'Produk tidak ditemukan.');
+        }
+
+        
+        // Hitung selisih kuantitas
+        $selisih = $request->quantity + $outcoming->quantity;
+        // dd($product, $request->quantity, $incoming, $selisih);
+
+        // Perbarui stok produk (pastikan stok tidak menjadi negatif)
+        $newqty = $product->quantity - $selisih;
+        if ($newqty < 0) {
+            return redirect()->back()->with('error', 'Stok produk tidak mencukupi untuk pembaruan.')->withInput();
+        }
+        $product->quantity = $newqty;
+        $product->save();
+
         Outcoming::where('id', $id)->update([
             'id_product' => $request->id_product,
-            'updater_id' => auth()->id(),
+            'updater_id' => Auth::user()->id,
             'purchase_date' => $request->tanggal,
             'unit' => $request->unit,
             'kode' => $request->kode_keluar,
@@ -120,8 +156,16 @@ class OutcomingController extends Controller
     public function destroy(Outcoming $outcoming, $id)
     {
         $outcoming = Outcoming::find($id);
-        $outcoming->delete();
-        return redirect()->route('outcoming.index')->with('success', 'Data Berhasil Dihapus');
+        if ($outcoming) {
+            $product = Product::find($outcoming->id_product);
+            $product->quantity += $outcoming->quantity;
+            $product->save();
+            $outcoming->delete();
+
+            return redirect()->route('outcoming.index')->with('success', 'Barang Masuk berhasil dihapus.');
+        } else {
+            return redirect()->route('outcoming.index')->with('error', 'Barang Masuk tidak ditemukan.');
+        }
     }
 
     public function cetak_pdf()

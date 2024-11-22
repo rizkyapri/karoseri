@@ -15,7 +15,7 @@
             @component('inc._page_heading', [
                 'icon' => 'shopping-bag',
                 'heading1' => 'Produk',
-                'heading2' => 'Karoseri',   
+                'heading2' => 'Karoseri',
             ])
             @endcomponent
         </div>
@@ -36,11 +36,12 @@
                 </x-slot>
                 <div class="form-group">
                     <label for="kode_produk">Kode Produk</label>
-                    <input type="text" readonly name="kode_produk" id="kode_produk" class="form-control" value="{{ old('kode_produk') }}">
+                    <input type="text" readonly name="kode_produk" id="kode_produk" class="form-control"
+                        value="{{ $newCode }}">
                     @error('kode_produk')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>  
+                </div>
                 <div class="form-group">
                     <label for="name">Nama</label>
                     <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
@@ -57,16 +58,14 @@
                 </div>
                 <div class="form-group">
                     <label for="satuan">Satuan</label>
-                    <input type="text" name="unit" id="unit" class="form-control"
-                        value="{{ old('unit') }}">
+                    <input type="text" name="unit" id="unit" class="form-control" value="{{ old('unit') }}">
                     @error('unit')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="price">Harga</label>
-                    <input type="text" name="price" id="price" class="form-control"
-                        value="{{ old('price') }}">
+                    <input type="text" name="price" id="price" class="form-control" value="{{ old('price') }}">
                     @error('price')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -77,28 +76,4 @@
             </x-panel.show>
         </form>
     </main>
-@endsection
-@section('pages-script')
-<script>
-    // Generate the product code when the page loads
-    document.addEventListener("DOMContentLoaded", function() {
-    var kodeProdukField = document.getElementById('kode_produk');
-
-    // Ambil nomor terakhir dari localStorage
-    var lastNumber = localStorage.getItem('lastProductNumber') || 0;
-
-    // Tambahkan 1 ke nomor terakhir
-    var nextNumber = parseInt(lastNumber) + 1;
-
-    // Formatkan ke BRG-0001
-    var kodeProduk = 'BRG-' + nextNumber.toString().padStart(4, '0');
-
-    // Simpan nomor terakhir yang baru ke localStorage
-    localStorage.setItem('lastProductNumber', nextNumber);
-
-    // Set nilai ke field
-    kodeProdukField.value = kodeProduk;
-});
-
-</script>
 @endsection
