@@ -19,7 +19,7 @@ class CheckRole
         $explode = explode('|', $role);
 
         foreach ($explode as $key => $value) {
-            if ($request->user()->role == $value) {
+            if ($request->user()->getRoleNames()->first() == $value) {
                 return $next($request);
             }
         }

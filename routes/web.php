@@ -36,7 +36,7 @@ Route::get('/about', [TemplateController::class, 'about'])->middleware(['auth', 
 // KAROSESI PROGRESS
 require __DIR__ . '/mainmenu-template.php';
 require __DIR__ . '/mainmenu-master.php';
-require __DIR__ . '/mainmenu-user.php';
+require __DIR__ . '/mainmenu-settings.php';
 require __DIR__ . '/mainmenu-product.php';
 require __DIR__ . '/mainmenu-supplier.php';
 require __DIR__ . '/mainmenu-incoming.php';

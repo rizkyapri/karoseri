@@ -20,20 +20,20 @@ use Illuminate\Support\Facades\Route;
  */
 /* Route::fallback([TemplateController::class, 'error_pages']); */
 
-Route::middleware('admin')->prefix('dev')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('dev')->group(function () {
     // DEVELOPER
     Route::get('/component', [TemplateController::class, 'dev_component'])->name('component');
     Route::get('/landing_page', [TemplateController::class, 'dev_landing_page'])->name('landing_page');
 });
 // INTEL
-Route::middleware('admin')->prefix('intel')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('intel')->group(function () {
     Route::get('/analytics_dashboard', [TemplateController::class, 'intel_analytics_dashboard'])->name('analytics_dashboard');
     Route::get('/marketing_dashboard', [TemplateController::class, 'intel_marketing_dashboard'])->name('marketing_dashboard');
     Route::get('/introduction', [TemplateController::class, 'intel_introduction'])->name('introduction');
     Route::get('/privacy', [TemplateController::class, 'intel_privacy'])->name('privacy');
 });
 // SETTING
-Route::middleware('admin')->prefix('setting')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('setting')->group(function () {
     Route::get('/how_it_works', [TemplateController::class, 'settings_how_it_works'])->name('how_it_works');
     Route::get('/layout_options', [TemplateController::class, 'settings_layout_options'])->name('layout_options');
     Route::get('/theme_modes', [TemplateController::class, 'settings_theme_modes'])->name('theme_modes');
@@ -41,7 +41,7 @@ Route::middleware('admin')->prefix('setting')->group(function () {
     Route::get('/saving_db', [TemplateController::class, 'settings_saving_db'])->name('saving_db');
 });
 // DOC
-Route::middleware('admin')->prefix('docs')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('docs')->group(function () {
     Route::get('/general', [TemplateController::class, 'docs_general'])->name('general');
     Route::get('/project_structure', [TemplateController::class, 'docs_project_structure'])->name('project_structure');
     Route::get('/flavors_editions', [TemplateController::class, 'docs_flavors_editions'])->name('flavors_editions');
@@ -51,7 +51,7 @@ Route::middleware('admin')->prefix('docs')->group(function () {
     Route::get('/buildnotes', [TemplateController::class, 'docs_buildnotes'])->name('buildnotes');
 });
 // UI
-Route::middleware('admin')->prefix('ui')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('ui')->group(function () {
     Route::get('/alerts', [TemplateController::class, 'ui_alerts'])->name('alerts');
     Route::get('/accordion', [TemplateController::class, 'ui_accordion'])->name('accordion');
     Route::get('/badges', [TemplateController::class, 'ui_badges'])->name('badges');
@@ -77,7 +77,7 @@ Route::middleware('admin')->prefix('ui')->group(function () {
     Route::get('/tooltips', [TemplateController::class, 'ui_tooltips'])->name('tooltips');
 });
 // utilities
-Route::middleware('admin')->prefix('utilities')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('utilities')->group(function () {
     Route::get('/borders', [TemplateController::class, 'utilities_borders'])->name('borders');
     Route::get('/clearfix', [TemplateController::class, 'utilities_clearfix'])->name('clearfix');
     Route::get('/color_pallet', [TemplateController::class, 'utilities_color_pallet'])->name('color_pallet');
@@ -92,7 +92,7 @@ Route::middleware('admin')->prefix('utilities')->group(function () {
     Route::get('/typography', [TemplateController::class, 'utilities_typography'])->name('typography');
 });
 // font icon
-Route::middleware('admin')->prefix('icons')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('icons')->group(function () {
     Route::get('/fontawesome_light', [TemplateController::class, 'icons_fontawesome_light'])->name('fontawesome_light');
     Route::get('/fontawesome_regular', [TemplateController::class, 'icons_fontawesome_regular'])->name('fontawesome_regular');
     Route::get('/fontawesome_solid', [TemplateController::class, 'icons_fontawesome_solid'])->name('fontawesome_solid');
@@ -104,19 +104,19 @@ Route::middleware('admin')->prefix('icons')->group(function () {
     Route::get('/stack_generate', [TemplateController::class, 'icons_stack_generate'])->name('stack_generate?layers=3');
 });
 //tabel
-Route::middleware('admin')->prefix('tables')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('tables')->group(function () {
     Route::get('/basic', [TemplateController::class, 'tables_basic'])->name('basic');
     Route::get('/generate_style', [TemplateController::class, 'tables_generate_style'])->name('generate_style');
 });
 //Form Stuff
-Route::middleware('admin')->prefix('form_stuff')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('form_stuff')->group(function () {
     Route::get('/basic_inputs', [TemplateController::class, 'form_stuff_basic_inputs'])->name('basic_inputs');
     Route::get('/checkbox_radio', [TemplateController::class, 'form_stuff_checkbox_radio'])->name('checkbox_radio');
     Route::get('/input_groups', [TemplateController::class, 'form_stuff_input_groups'])->name('input_groups');
     Route::get('/validation', [TemplateController::class, 'form_stuff_validation'])->name('validation');
 });
 //Plugins
-Route::middleware('admin')->prefix('plugins')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('plugins')->group(function () {
     Route::get('/faq', [TemplateController::class, 'plugins_faq'])->name('faq');
     Route::get('/waves', [TemplateController::class, 'plugins_waves'])->name('waves');
     Route::get('/pacejs', [TemplateController::class, 'plugins_pacejs'])->name('pacejs');
@@ -129,7 +129,7 @@ Route::middleware('admin')->prefix('plugins')->group(function () {
     Route::get('/appcore', [TemplateController::class, 'plugins_appcore'])->name('appcore');
 });
 //datatables
-Route::middleware('admin')->prefix('datatables')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('datatables')->group(function () {
     Route::get('/basic_databales', [TemplateController::class, 'datatables_basic'])->name('basic_databales');
     Route::get('/autofill', [TemplateController::class, 'datatables_autofill'])->name('autofill');
     Route::get('/buttons', [TemplateController::class, 'datatables_buttons'])->name('buttons');
@@ -148,7 +148,7 @@ Route::middleware('admin')->prefix('datatables')->group(function () {
     Route::get('/alteditor', [TemplateController::class, 'datatables_alteditor'])->name('alteditor');
 });
 // statistics
-Route::middleware('admin')->prefix('statistics')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('statistics')->group(function () {
     Route::get('/flot', [TemplateController::class, 'statistics_flot'])->name('flot');
     Route::get('/chartjs', [TemplateController::class, 'statistics_chartjs'])->name('chartjs');
     Route::get('/chartist', [TemplateController::class, 'statistics_chartist'])->name('chartist');
@@ -159,12 +159,12 @@ Route::middleware('admin')->prefix('statistics')->group(function () {
     Route::get('/dygraph', [TemplateController::class, 'statistics_dygraph'])->name('dygraph');
 });
 //notifikasi
-Route::middleware('admin')->prefix('notifications')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('notifications')->group(function () {
     Route::get('/sweetalert2', [TemplateController::class, 'notifications_sweetalert2'])->name('sweetalert2');
     Route::get('/toastr', [TemplateController::class, 'notifications_toastr'])->name('toastr');
 });
 //form plugins
-Route::middleware('admin')->prefix('form_plugins')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('form_plugins')->group(function () {
     Route::get('/colorpicker', [TemplateController::class, 'form_plugins_colorpicker'])->name('colorpicker');
     Route::get('/datepicker', [TemplateController::class, 'form_plugins_datepicker'])->name('datepicker');
     Route::get('/daterange_picker', [TemplateController::class, 'form_plugins_daterange_picker'])->name('daterange_picker');
@@ -176,26 +176,26 @@ Route::middleware('admin')->prefix('form_plugins')->group(function () {
     Route::get('/summernote', [TemplateController::class, 'form_plugins_summernote'])->name('summernote');
 });
 //Miscellaneous
-Route::middleware('admin')->prefix('miscellaneous')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('miscellaneous')->group(function () {
     Route::get('/fullcalendar', [TemplateController::class, 'miscellaneous_fullcalendar'])->name('fullcalendar');
     Route::get('/lightgallery', [TemplateController::class, 'miscellaneous_lightgallery'])->name('lightgallery');
     //Route::get('/treeview', [TemplateController::class, 'miscellaneous_treeview'])->name('treeview');
 });
 
 // Forum
-Route::middleware('admin')->prefix('pages/forum')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('pages/forum')->group(function () {
     Route::get('/list', [TemplateController::class, 'page_forum_list'])->name('list');
     Route::get('/threads', [TemplateController::class, 'page_forum_threads'])->name('threads');
     Route::get('/discussion', [TemplateController::class, 'page_forum_discussion'])->name('discussion');
 });
 //pages inbox
-Route::middleware('admin')->prefix('pages/inbox')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('pages/inbox')->group(function () {
     Route::get('/general_inbox', [TemplateController::class, 'page_inbox_general'])->name('general_inbox');
     Route::get('/read', [TemplateController::class, 'page_inbox_read'])->name('read');
     Route::get('/write', [TemplateController::class, 'page_inbox_write'])->name('write');
 });
 //Authentication
-Route::middleware('admin')->prefix('pages/authentication')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('pages/authentication')->group(function () {
     Route::get('/auth_forget', [TemplateController::class, 'page_auth_forget'])->name('auth_forget');
     Route::get('/auth_locked', [TemplateController::class, 'page_auth_locked'])->name('auth_locked');
     Route::get('/auth_login', [TemplateController::class, 'page_auth_login'])->name('auth_login');
@@ -204,13 +204,13 @@ Route::middleware('admin')->prefix('pages/authentication')->group(function () {
     Route::get('/auth_confirmation', [TemplateController::class, 'page_auth_confirmation'])->name('auth_confirmation');
 });
 //Error Pages
-Route::middleware('admin')->prefix('pages/error')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('pages/error')->group(function () {
     Route::get('/error_general', [TemplateController::class, 'page_error_general'])->name('error_general');
     Route::get('/error_404', [TemplateController::class, 'page_error_404'])->name('error_404');
     Route::get('/error_announced', [TemplateController::class, 'page_error_announced'])->name('error_announced');
 });
 
-Route::middleware('admin')->prefix('pages/other')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('pages/other')->group(function () {
     Route::get('/chat', [TemplateController::class, 'page_chat'])->name('chat');
     Route::get('/contacts', [TemplateController::class, 'page_contacts'])->name('contacts');
     Route::get('/invoice', [TemplateController::class, 'page_invoice'])->name('invoice');

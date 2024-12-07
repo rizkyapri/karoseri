@@ -22,19 +22,19 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $lastProduct = Product::orderBy('id', 'desc')->first();
+        // $lastProduct = Product::orderBy('id', 'desc')->first();
 
-        if ($lastProduct) {
-            $lastCode = $lastProduct->kode_produk;
-            $lastNumber = (int) substr($lastCode, 4);
-            $newNumber = $lastNumber + 1;
-        } else {
-            $newNumber = 1;
-        }
+        // if ($lastProduct) {
+        //     $lastCode = $lastProduct->kode_produk;
+        //     $lastNumber = (int) substr($lastCode, 4);
+        //     $newNumber = $lastNumber + 1;
+        // } else {
+        //     $newNumber = 1;
+        // }
 
-        $newCode = 'BRG-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+        // $newCode = 'BRG-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
 
-        return view('product.create', compact('newCode'));
+        return view('product.create');
     }
 
 
@@ -43,24 +43,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // Ambil kode terakhir dari database
-        $lastProduct = Product::orderBy('id', 'desc')->first();
 
-        if ($lastProduct) {
-            // Ambil kode terakhir dan pecahkan
-            $lastCode = $lastProduct->kode_produk; // Contoh: BRG-0004
-            $lastNumber = (int) substr($lastCode, 4); // Ambil bagian numerik: 0004
-            $newNumber = $lastNumber + 1; // Tambahkan 1
-        } else {
-            // Jika belum ada data, mulai dari 1
-            $newNumber = 1;
-        }
-
-        // Format kode baru
-        $kodeProdukBaru = 'BRG-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3|max:255',
+            'kode_produk' => 'required|string|min:3|max:255',
             'quantity' => 'required|integer',
             'unit' => 'required|string',
             'price' => 'required|integer',
@@ -71,7 +58,7 @@ class ProductController extends Controller
         }
 
         $product = Product::create([
-            'kode_produk' => $kodeProdukBaru,
+            'kode_produk' => $request->kode_produk,
             'name' => $request->name,
             'quantity' => $request->quantity,
             'unit' => $request->unit,
@@ -122,6 +109,7 @@ class ProductController extends Controller
 
         $product = Product::where('id', $request->id)->update([
             'name' => $request->name,
+            'kode_produk' => $request->kode_produk,
             'quantity' => $request->quantity,
             'unit' => $request->unit,
             'price' => $request->price,
@@ -133,8 +121,13 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product, $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $product->delete();
+            return redirect()->route('product.index')->with('success', 'Produk berhasil dihapus.');
+        }
+        return redirect()->route('product.index')->with('error', 'Produk tidak ditemukan.');
     }
 }

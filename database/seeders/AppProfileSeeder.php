@@ -18,7 +18,7 @@ class AppProfileSeeder extends Seeder
                 'app_nama' => 'Karoseri',
                 'app_deskripsi' => 'Dashboard yang bisa di gunakan untuk manajemen aplikasi',
                 'app_tahun' => 2024,
-                'app_pengembang' => 'Team K2 NEXUS',
+                'app_pengembang' => 'Team K2 Nexus',
                 'app_icon' => 'logoTRB.png',
                 'app_logo' => 'logoTRB.png',
                 'created_at' => now(),

@@ -37,7 +37,7 @@
                 </x-slot>
                 <div class="form-group">
                     <label for="kode_produk">Kode Produk</label>
-                    <input type="text" readonly name="kode_produk" id="kode_produk" class="form-control"
+                    <input type="text" name="kode_produk" id="kode_produk" class="form-control"
                         value="{{ old('kode_produk', $product->kode_produk) }}">
                     @error('kode_produk')
                         <span class="text-danger">{{ $message }}</span>

@@ -15,16 +15,16 @@
             @component('inc._page_heading', [
                 'icon' => 'cubes',
                 'heading1' => 'Supplier',
-                'heading2' => 'Karoseri',   
+                'heading2' => 'Karoseri',
             ])
             @endcomponent
         </div>
-        <x-panel.show title="Daftar" subtitle="Produk Karoseri">
+        <x-panel.show title="Daftar" subtitle="Supplier Karoseri">
             <x-slot name="paneltoolbar">
                 <x-panel.tool-bar>
-                    @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
-                    <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
-                    @endif
+                    @can('tambah-supplier')
+                        <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                    @endcan
                 </x-panel.tool-bar>
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
@@ -34,9 +34,9 @@
                         <th>Nama</th>
                         <th>PIC</th>
                         <th>Phone</th>
-                        @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
-                        <th>Aksi</th>
-                        @endif
+                        @canany(['edit-supplier', 'hapus-supplier'])
+                            <th>Aksi</th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody>
@@ -48,19 +48,32 @@
                             </td>
                             <td>{{ $supplier->pic }}</td>
                             <td>{{ $supplier->phone }}</td>
-                            @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Purchasing')
-                            <td>
-                                <a href="{{ route('supplier.show', $supplier->id) }}" class="btn btn-info">Detail</a>
-                                <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-warning">Edit</a>
-                                <button type="button" class="btn btn-danger"
-                                    onclick="confirmDelete({{ $supplier->id }})">Hapus</button>
-                                <form id="delete-form-{{ $supplier->id }}" action="{{ route('supplier.destroy', $supplier->id) }}"
-                                    method="POST" style="display:none;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            </td>
-                            @endif
+                            @canany(['edit-supplier', 'hapus-supplier'])
+                                <td>
+                                    <a href="{{ route('supplier.show', $supplier->id) }}" class="btn btn-info">Detail</a>
+
+                                    {{-- Tombol Edit --}}
+                                    @can('edit-supplier')
+                                        <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-warning">Edit</a>
+                                    @endcan
+
+                                    {{-- Tombol Hapus --}}
+                                    @can('hapus-supplier')
+                                        <button type="button" class="btn btn-danger"
+                                            onclick="confirmDelete({{ $supplier->id }})">Hapus</button>
+                                    @endcan
+
+                                    {{-- Form Hapus --}}
+                                    @can('hapus-supplier')
+                                        <form id="delete-form-{{ $supplier->id }}"
+                                            action="{{ route('supplier.destroy', $supplier->id) }}" method="POST"
+                                            style="display:none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    @endcan
+                                </td>
+                            @endcanany
                         </tr>
                     @endforeach
                 </tbody>

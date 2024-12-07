@@ -19,8 +19,12 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/admin/img/{{ $profileApp->app_icon ?? '' }}">
 <link rel="mask-icon" href="/admin/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
 
-<link rel="stylesheet" media="screen, print" href="/admin/css/fa-duotone.css">
+{{-- font awesome --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{{-- <link rel="stylesheet" media="screen, print" href="/admin/css/fa-duotone.css">
 <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
 <link rel="stylesheet" media="screen, print" href="/admin/css/fa-light.css">
 <link rel="stylesheet" media="screen, print" href="/admin/css/fa-regular.css">
-<link rel="stylesheet" media="screen, print" href="/admin/css/fa-brands.css">
+<link rel="stylesheet" media="screen, print" href="/admin/css/fa-brands.css"> --}}

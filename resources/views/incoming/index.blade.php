@@ -21,11 +21,11 @@
         </div>
         <x-panel.show title="Daftar" subtitle="Barang Masuk">
             <x-slot name="paneltoolbar">
-                @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
-                <x-panel.tool-bar>
-                    <a href="{{ route('incoming.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
-                </x-panel.tool-bar>
-                @endif
+                @can('tambah-barang-masuk')
+                    <x-panel.tool-bar>
+                        <a href="{{ route('incoming.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                    </x-panel.tool-bar>
+                @endcan
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                 <thead>
@@ -38,10 +38,12 @@
                         <th>Satuan</th>
                         <th>Nama Supplier</th>
                         {{-- <th>Keterangan</th> --}}
-                        @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
-                        <th>Harga Barang</th>
-                        <th>Aksi</th>
+                        @if (Auth::user()->getRoleNames()->first() == 'Admin' || Auth::user()->getRoleNames()->first() == 'Purchasing')
+                            <th>Harga Barang</th>
                         @endif
+                        @canany(['edit-barang-masuk', 'hapus-barang-masuk'])
+                            <th>Aksi</th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody>
@@ -57,25 +59,39 @@
                             <td>{{ $incoming->unit }}</td>
                             {{-- <td>{{ $incoming->keterangan }}</td> --}}
                             <td>{{ $incoming->supplier->name }}</td>
-                            @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Gudang')
-                            <td>Rp. {{ number_format($incoming->product->price * $incoming->kuantitas, 0, ',', '.') }}</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Incoming Actions">
-                                    <a href="{{ route('incoming.show', $incoming->id) }}"
-                                        class="btn btn-info btn-sm">Detail</a>
-                                    <a href="{{ route('incoming.edit', $incoming->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        onclick="confirmDelete({{ $incoming->id }})">Hapus</button>
-                                </div>
-                                <form id="delete-form-{{ $incoming->id }}"
-                                    action="{{ route('incoming.destroy', $incoming->id) }}" method="POST"
-                                    style="display:none;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            </td>
+                            @if (Auth::user()->getRoleNames()->first() == 'Admin' || Auth::user()->getRoleNames()->first() == 'Purchasing')
+                                <td>Rp. {{ number_format($incoming->product->price * $incoming->kuantitas, 0, ',', '.') }}
+                                </td>
                             @endif
+                            @canany(['edit-barang-masuk', 'hapus-barang-masuk'])
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Incoming Actions">
+                                        <a href="{{ route('incoming.show', $incoming->id) }}"
+                                            class="btn btn-info btn-sm">Detail</a>
+
+                                        {{-- Tombol Edit --}}
+                                        @can('edit-barang-masuk')
+                                            <a href="{{ route('incoming.edit', $incoming->id) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                        @endcan
+
+                                        {{-- Tombol Hapus --}}
+                                        @can('hapus-barang-masuk')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $incoming->id }})">Hapus</button>
+                                        @endcan
+                                    </div>
+                                    {{-- Form Hapus --}}
+                                    @can('hapus-barang-masuk')
+                                        <form id="delete-form-{{ $incoming->id }}"
+                                            action="{{ route('incoming.destroy', $incoming->id) }}" method="POST"
+                                            style="display:none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    @endcan
+                                </td>
+                            @endcanany
 
                         </tr>
                     @endforeach

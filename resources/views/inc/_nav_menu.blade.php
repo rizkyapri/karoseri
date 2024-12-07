@@ -2,23 +2,20 @@
     <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
         <a href="/dashboard" title="Dashboard" data-filter-tags="application dashboard">
             <i class="fal fa-home"></i>
-            <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
+            <span class="nav-link-text" data-i18n="nav.application_dashboard">Stok Barang</span>
         </a>
     </li>
 
-    @if (auth()->user()->role == 'Admin')
+    {{-- @if (auth()->user()->getRoleNames()->first() == 'Admin') --}}
         @include('inc.mainmenu._menu_master')
-    @endif
-    @if (auth()->user()->role == 'Purchasing')
+    {{-- @endif --}}
+    {{-- @if (auth()->user()->getRoleNames()->first() == 'Purchasing')
         @include('inc.mainmenu._menu_purchasing')
     @endif
-    @if (auth()->user()->role == 'Gudang')
+    @if (auth()->user()->getRoleNames()->first() == 'Gudang')
         @include('inc.mainmenu._menu_gudang')
-    @endif
-    @if (auth()->user()->role == 'Siswa')
-        @include('inc.mainmenu._menu_siswa')
-    @endif
-    @if (auth()->user()->role == 'Admin')
+    @endif --}}
+    @if (auth()->user()->getRoleNames()->first() == 'Admin')
         @if (App\Helpers\Fitures::isMainMenuTemplateActive())
             @include('inc.mainmenu._menu_depelover')
             @include('inc.mainmenu._menu_intel_app')

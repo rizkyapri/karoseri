@@ -1,4 +1,4 @@
-@if (auth()->user()->role == 'Admin')
+@if (auth()->user()->getRoleNames()->first() == 'Admin')
     <div>
         <a href="#" class="header-icon" data-toggle="dropdown" title="My Apps">
             <i class="fal fa-cube"></i>

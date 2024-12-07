@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,9 +21,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            AppFiturSeeder::class,
-            AppProfileSeeder::class,
+            RolePermissionSeeder::class,
             UserSeeder::class,
+            AppProfileSeeder::class,
+            AppFiturSeeder::class,
         ]);
     }
 }

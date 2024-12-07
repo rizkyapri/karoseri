@@ -21,7 +21,7 @@
         title="Full Screen">
         <i class="fal fa-expand"></i>
     </a>
-    @if (auth()->user()->role == 'Admin')
+    @if (auth()->user()->getRoleNames()->first() == 'Admin')
         <a href="#" class="menu-item btn" data-action="app-print" data-toggle="tooltip" data-placement="left"
             title="Print page">
             <i class="fal fa-print"></i>

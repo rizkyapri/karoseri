@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="dropdown-divider m-0"></div>
-                @if (auth()->user()->role == 'Admin')
+                @if (auth()->user()->getRoleNames()->first() == 'Admin')
                     <a href="#" class="dropdown-item" data-action="app-reset">
                         <span data-i18n="drpdwn.reset_layout">Reset Layout</span>
                     </a>
@@ -109,7 +109,7 @@
                         <span data-i18n="drpdwn.print">Print</span>
                         <i class="float-right text-muted fw-n">Ctrl + P</i>
                     </a>
-                    <div class="dropdown-multilevel dropdown-multilevel-left">
+                    {{-- <div class="dropdown-multilevel dropdown-multilevel-left">
                         <div class="dropdown-item">
                             Language
                         </div>
@@ -125,9 +125,9 @@
                             <a href="#?lang=id" class="dropdown-item" data-action="lang" data-lang="id">Bahasa
                                 Indonesia</a>
                         </div>
-                    </div>
+                    </div> --}}
                 @endif
-                @if (auth()->user()->role !== 'Admin')
+                @if (auth()->user()->getRoleNames()->first() !== 'Admin')
                     <div class="dropdown-divider m-0"></div>
                     <a href="#" class="dropdown-item" data-action="app-fullscreen">
                         <span data-i18n="drpdwn.fullscreen">Fullscreen</span>

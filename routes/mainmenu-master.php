@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/master_profil', [MasterController::class, 'master_profil'])->name('master_profil');
 }); */
 //TOOLS
-Route::middleware('admin')->prefix('tools')->group(function () {
+Route::middleware(['auth', 'role:Admin', 'verified'])->prefix('tools')->group(function () {
 
 
     Route::resource('app_fiturs', AppFiturController::class);
@@ -61,7 +61,7 @@ Route::middleware('admin')->prefix('tools')->group(function () {
 //Profil Admin
 // groups middleware
 Route::middleware('auth')->group(function () {
-    Route::middleware('role:Admin|Purchasing|Gudang')->prefix('profile')->group(function () {
+    Route::middleware('role:Admin|Purchasing|Gudang')->prefix('settings/profile')->group(function () {
         Route::get('/profil_admin', [MasterController::class, 'master_profil'])->name('profil_admin');
         Route::get('/profil_admin/edit', [MasterController::class, 'master_profil_edit'])->name('profil_admin.edit');
         Route::put('/profil_admin', [MasterController::class, 'master_profil_update'])->name('profil_admin.update');

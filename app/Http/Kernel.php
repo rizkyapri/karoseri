@@ -67,6 +67,10 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'purchasing' => \App\Http\Middleware\IsPurchasing::class,
         'gudang' => \App\Http\Middleware\IsGudang::class,
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+
     ];
 
     protected $routeMiddleware = [

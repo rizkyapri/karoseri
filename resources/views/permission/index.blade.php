@@ -1,5 +1,5 @@
 @extends('inc.main')
-@section('title', 'Pengguna')
+@section('title', 'Izin')
 @section('pages-css')
     <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
     <link rel="stylesheet" media="screen, print" href="/admin/css/theme-demo.css">
@@ -13,72 +13,50 @@
         ])
         <div class="subheader">
             @component('inc._page_heading', [
-                'icon' => 'user',
-                'heading1' => 'Pengguna',
-                'heading2' => 'WebApps',
+                'icon' => 'Izin',
+                'heading1' => 'Izin Pengguna',
             ])
             @endcomponent
         </div>
-        <x-panel.show title="Daftar" subtitle="Pengguna WebApps">
+        <x-panel.show title="Daftar" subtitle="Izin Pengguna">
             <x-slot name="paneltoolbar">
-                @can('tambah-user')
+                @can('tambah-permission')
                     <x-panel.tool-bar>
-                        <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                        <a href="{{ route('permissions.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
                     </x-panel.tool-bar>
                 @endcan
             </x-slot>
             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Role</th>
                         <th>Nama</th>
-                        <th>Email</th>
-                        <th>image</th>
-                        @canany(['edit-user', 'hapus-user'])
-                            <th>Aksi</th>
-                        @endcanany
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($permissions as $permission)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>
-                                <span
-                                    class="badge {{ $user->role ? ($user->role == 'Purchasing' ? 'bg-danger' : 'bg-primary') : 'bg-primary' }}">
-                                    {{ $user->role ? $user->role : 'Tidak Tersedia' }}
-                                </span>
-                            </td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                @if ($user->image == null)
-                                    <span class="badge bg-primary">No Image</span>
-                                @else
-                                    <img src="{{ asset('storage/profile/' . $user->image) }}" alt="{{ $user->name }}"
-                                        style="max-width: 50px">
-                                @endif
-                            </td>
-                            @canany(['edit-user', 'hapus-user'])
+                            <td>{{ $permission->name }}</td>
+                            @canany(['edit-permission', 'hapus-permission'])
                                 <td>
-                                    <a href="{{ route('user.show', $user->id) }}" class="btn btn-info">Detail</a>
+                                    <a href="{{ route('permissions.show', $permission->id) }}" class="btn btn-info">Detail</a>
 
                                     {{-- Tombol Edit --}}
-                                    @can('edit-user')
-                                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                                    @can('edit-permission')
+                                        <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-warning">Edit</a>
                                     @endcan
 
                                     {{-- Tombol Hapus --}}
-                                    @can('hapus-user')
+                                    @can('hapus-permission')
                                         <button type="button" class="btn btn-danger"
-                                            onclick="confirmDelete({{ $user->id }})">Hapus</button>
+                                            onclick="confirmDelete({{ $permission->id }})">Hapus</button>
                                     @endcan
 
                                     {{-- Form Hapus --}}
-                                    @can('hapus-user')
-                                        <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}"
-                                            method="POST" style="display:none;">
+                                    @can('hapus-permission')
+                                        <form id="delete-form-{{ $permission->id }}"
+                                            action="{{ route('permissions.destroy', $permission->id) }}" method="POST"
+                                            style="display:none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>

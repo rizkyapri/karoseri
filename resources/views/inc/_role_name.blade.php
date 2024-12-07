@@ -23,6 +23,7 @@
         </span>
         <span class="fw-500 fs-xl d-block color-primary-500">
             {{ auth()->user()->name }}
+            {{-- @dd(Auth(), auth()->user(), auth()->user()->name, auth()->user()->getRoleNames()) --}}
         </span>
     </div>
 </div>
@@ -33,7 +34,7 @@
             <small>Status</small>
         </span>
         <span class="fw-500 fs-xl d-block color-danger-500">
-            {{ auth()->user()->role }}
+            {{ auth()->user()->getRoleNames()->first() }}
         </span>
     </div>
 </div>

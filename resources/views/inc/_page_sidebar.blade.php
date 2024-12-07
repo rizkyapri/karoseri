@@ -35,7 +35,7 @@
                         {{ auth()->user()->name }}
                     </span>
                 </a>
-                <span class="d-inline-block text-truncate text-truncate-sm">{{ auth()->user()->role }}</span>
+                <span class="d-inline-block text-truncate text-truncate-sm">{{ auth()->user()->getRoleNames()->first() }}</span>
             </div>
             <img src="/admin/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
             <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle"
