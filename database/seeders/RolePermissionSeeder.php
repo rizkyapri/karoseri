@@ -51,6 +51,11 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'lihat-barang-keluar']);
         Permission::create(['name' => 'print-barang-keluar']);
 
+        Permission::create(['name' => 'tambah-komponen']);
+        Permission::create(['name' => 'edit-komponen']);
+        Permission::create(['name' => 'hapus-komponen']);
+        Permission::create(['name' => 'lihat-komponen']);
+
         // buat role dengan spatie models
         Role::create(['name' => 'Admin']);
         Role::create(['name' => 'Purchasing']);
@@ -97,6 +102,11 @@ class RolePermissionSeeder extends Seeder
         $roleAdmin->givePermissionTo('hapus-barang-keluar');
         $roleAdmin->givePermissionTo('lihat-barang-keluar');
         $roleAdmin->givePermissionTo('print-barang-keluar');
+
+        $roleAdmin->givePermissionTo('tambah-komponen');
+        $roleAdmin->givePermissionTo('edit-komponen');
+        $roleAdmin->givePermissionTo('hapus-komponen');
+        $roleAdmin->givePermissionTo('lihat-komponen');
 
         $rolePurchasing->givePermissionTo('tambah-produk');
         $rolePurchasing->givePermissionTo('edit-produk');

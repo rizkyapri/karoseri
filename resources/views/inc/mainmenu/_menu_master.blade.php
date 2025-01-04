@@ -1,9 +1,17 @@
 <li class="nav-title">Master</li>
 @can('lihat-produk')
 <li class="{{ Request::is('product/*') ? 'active' : '' }}">
-    <a href="{{ route('product.index') }}" title="Profil Admin" data-filter-tags="admin profil">
+    <a href="{{ route('product.index') }}" title="Product Admin" data-filter-tags="admin profil">
         <i class="fal fa-shopping-bag"></i>
         <span class="nav-link-text" data-i18n="nav.admin_profil">Produk</span>
+    </a>
+</li>
+@endcan
+@can('lihat-komponen')
+<li class="{{ Request::is('komponen/*') ? 'active' : '' }}">
+    <a href="{{ route('komponen.index') }}" title="Komponen" data-filter-tags="admin profil">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="nav-link-text" data-i18n="nav.admin_profil">Komponen</span>
     </a>
 </li>
 @endcan

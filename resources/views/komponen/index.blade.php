@@ -1,5 +1,5 @@
 @extends('inc.main')
-@section('title', 'Peran')
+@section('title', 'Komponen')
 @section('pages-css')
     <link rel="stylesheet" media="screen, print" href="/admin/css/fa-solid.css">
     <link rel="stylesheet" media="screen, print" href="/admin/css/theme-demo.css">
@@ -9,20 +9,20 @@
 @section('pages-content')
     <main id="js-page-content" role="main" class="page-content">
         @include('inc._page_breadcrumb', [
-            'category_1' => 'Settings',
+            'category_1' => 'Master',
         ])
         <div class="subheader">
             @component('inc._page_heading', [
-                'icon' => 'fingerprint',
-                'heading1' => 'Peran Pengguna',
+                'icon' => 'cart-shopping',
+                'heading1' => 'Komponen',
             ])
             @endcomponent
         </div>
-        <x-panel.show title="Daftar" subtitle="Peran Pengguna">
+        <x-panel.show title="Daftar" subtitle="Komponen">
             <x-slot name="paneltoolbar">
-                @can('tambah-role')
+                @can('tambah-komponen')
                     <x-panel.tool-bar>
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
+                        <a href="{{ route('komponen.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
                     </x-panel.tool-bar>
                 @endcan
             </x-slot>
@@ -30,34 +30,39 @@
                 <thead>
                     <tr>
                         <th>Nama</th>
-                        @canany(['edit-role', 'hapus-role'])
+                        <th>Kuantitas</th>
+                        <th>Harga</th>
+                        @canany(['edit-komponen', 'hapus-komponen'])
                             <th>Aksi</th>
                         @endcanany
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $role)
+                    @foreach ($components as $component)
                         <tr>
-                            <td>{{ $role->name }}</td>
-                            @canany(['edit-role', 'hapus-role'])
+                            <td>{{ $component->name }}</td>
+                            <td>{{ $component->quantity }}</td>
+                            <td>Rp. {{ number_format($component->price, 0, 2) }}</td>
+                            @canany(['edit-komponen', 'hapus-komponen'])
                                 <td>
-                                    <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info">Detail</a>
+                                    <a href="{{ route('komponen.show', $component->id) }}" class="btn btn-info">Detail</a>
 
                                     {{-- Tombol Edit --}}
-                                    @can('edit-role')
-                                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
+                                    @can('edit-komponen')
+                                        <a href="{{ route('komponen.edit', $component->id) }}" class="btn btn-warning">Edit</a>
                                     @endcan
 
                                     {{-- Tombol Hapus --}}
-                                    @can('hapus-role')
+                                    @can('hapus-komponen')
                                         <button type="button" class="btn btn-danger"
-                                            onclick="confirmDelete({{ $role->id }})">Hapus</button>
+                                            onclick="confirmDelete({{ $component->id }})">Hapus</button>
                                     @endcan
 
                                     {{-- Form Hapus --}}
-                                    @can('hapus-role')
-                                        <form id="delete-form-{{ $role->id }}" action="{{ route('roles.destroy', $role->id) }}"
-                                            method="POST" style="display:none;">
+                                    @can('hapus-komponen')
+                                        <form id="delete-form-{{ $component->id }}"
+                                            action="{{ route('komponen.destroy', $component->id) }}" method="POST"
+                                            style="display:none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>

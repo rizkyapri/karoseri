@@ -70,11 +70,11 @@ The following is the development plan, the points of which will continue to be u
 ## Installation
 
 ```console
-git clone https://github.com/AbdoelMadjid/starter-laravel-10-smartadmin.git
+git clone https://github.com/rizkyapri/karoseri.git
 ```
 
 ```console
-cd starter-laravel-10-smartadmin
+cd karoseri
 ```
 
 ```console
@@ -115,15 +115,14 @@ php artisan db:seed
 ## Roadmap Project
 ### Multi User
 Role : <br>
-- Admin : abdulmadjid@gmail.com/password <br>
-- Wali Kelas : tabiin@gmail.com/password <br>
-- Guru Mapel : adelina@gmail.com/password <br>
-- Siswa : ikbara@gmail.com/password <br>
+- Admin : admin@example.com/password <br>
+- Purchasing : purchasing@example.com/password <br>
+- Gudang : gudang@example.com/password <br>
 
 ### User Access
 The access used is to sort roles, by filtering the submenu section with the following script:
     
-```console
+<!-- ```console
 @if (auth()->user()->role == 'Admin')
     @include('inc.mainmenu._menu_master')
 @endif
@@ -136,9 +135,9 @@ The access used is to sort roles, by filtering the submenu section with the foll
 @if (auth()->user()->role == 'Siswa')
     @include('inc.mainmenu._menu_siswa')
 @endif
-```
+``` -->
     
-Active and Deactivated Login Options, for roles if the position is inactive you cannot log in
+<!-- Active and Deactivated Login Options, for roles if the position is inactive you cannot log in
     
 -   Middleware CheckRoleStatus
 
@@ -163,9 +162,9 @@ Active and Deactivated Login Options, for roles if the position is inactive you 
 
 ```console
 Route::get('/dashboard', [TemplateController::class, 'index'])->middleware(['auth', 'check.role.status']);
-```
+``` -->
 
-### Show feature
+<!-- ### Show feature
 -   Content Setting and Other Features
 
 Several features are set to be displayed or not
@@ -216,7 +215,7 @@ Several menu groups are created so that they can be displayed or not.
         @include('inc.mainmenu._menu_plugin_addon_app')
         @include('inc.mainmenu._menu_layouts_app')
     @endif
-```
+``` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

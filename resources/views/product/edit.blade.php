@@ -15,7 +15,7 @@
             @component('inc._page_heading', [
                 'icon' => 'shopping-bag',
                 'heading1' => 'Produk',
-                'heading2' => 'Karoseri',   
+                'heading2' => 'Karoseri',
             ])
             @endcomponent
         </div>
@@ -31,7 +31,6 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right">
                             <a class="dropdown-item" href="{{ route('product.index') }}">Kembali</a>
-
                         </div>
                     </x-panel.tool-bar>
                 </x-slot>
@@ -45,36 +44,133 @@
                 </div>
                 <div class="form-group">
                     <label for="name">Nama</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $product->name) }}">
+                    <input type="text" name="name" id="name" class="form-control"
+                        value="{{ old('name', $product->name) }}">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="kuantitas">Kuantitas</label>
-                    <input type="number" name="quantity" id="quantity" class="form-control" value="{{ old('quantity', $product->quantity) }}">
+                    <input type="number" name="quantity" id="quantity" class="form-control"
+                        value="{{ old('quantity', $product->quantity) }}">
                     @error('quantity')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="satuan">Satuan</label>
-                    <input type="text" name="unit" id="unit" class="form-control" value="{{ old('unit', $product->unit) }}">
+                    <input type="text" name="unit" id="unit" class="form-control"
+                        value="{{ old('unit', $product->unit) }}">
                     @error('unit')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="price">Harga</label>
-                    <input type="text" name="price" id="price" class="form-control" value="{{ old('price', $product->price) }}">
+                    <input type="text" name="price" id="price" class="form-control"
+                        value="{{ old('price', $product->price) }}">
                     @error('price')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label class="form-label">List Komponen</label>
+                    <table id="components-table" class="table table-bordered table-hover table-striped w-100">
+                        <thead>
+                            <tr>
+                                <th>Nama Komponen</th>
+                                <th>Kuantitas</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (old('components'))
+                                @foreach (old('components') as $index => $oldComponent)
+                                    <tr>
+                                        <td>
+                                            <select name="components[]"
+                                                class="select2-placeholder-multiple form-control select-component">
+                                                <option value="" disabled>Pilih Komponen</option>
+                                                @foreach ($components as $component)
+                                                    <option value="{{ $component->name }}"
+                                                        {{ $oldComponent == $component->name ? 'selected' : '' }}>
+                                                        {{ $component->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="quantities[]" class="form-control" min="0"
+                                                placeholder="0" value="{{ old('kuantitas')[$index] }}">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger remove-row">Hapus</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                @foreach ($product->components as $component)
+                                    <tr>
+                                        <td>
+                                            <select name="components[]"
+                                                class="select2-placeholder-multiple form-control select-component">
+                                                <option value="" disabled>Pilih Komponen</option>
+                                                @foreach ($componens as $availableComponent)
+                                                    <option value="{{ $availableComponent->name }}"
+                                                        {{ $component->name == $availableComponent->name ? 'selected' : '' }}>
+                                                        {{ $availableComponent->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="quantities[]" class="form-control" min="0"
+                                                placeholder="0" value="{{ $component->pivot->kuantitas }}">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger remove-row">Hapus</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary" id="add-row">Tambah Komponen</button>
+                </div>
+
                 <x-slot name="panelcontentfoot">
                     <x-button type="submit" color="primary" :label="__('Save')" class="ml-auto" />
                 </x-slot>
             </x-panel.show>
         </form>
     </main>
+@endsection
+
+@section('pages-script')
+    <script>
+        document.getElementById('add-row').addEventListener('click', function() {
+            var table = document.getElementById('components-table').getElementsByTagName('tbody')[0];
+            var row = table.insertRow();
+            row.innerHTML = `
+                <td>
+                    <select name="components[]" class="select2-placeholder-multiple form-control select-component">
+                        <option value="" disabled selected>Pilih Komponen</option>
+                        @foreach ($components as $component)
+                            <option value="{{ $component->name }}">{{ $component->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><input type="number" name="quantities[]" class="form-control" min="0" placeholder="0"></td>
+                <td><button type="button" class="btn btn-danger remove-row">Hapus</button></td>
+            `;
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-row')) {
+                var row = event.target.closest('tr');
+                row.parentNode.removeChild(row);
+            }
+        });
+    </script>
 @endsection

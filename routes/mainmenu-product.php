@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KomponenController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,37 @@ Route::middleware('auth')->group(function () {
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
     });
 });
+
+
+//KOMPONEN
+
+Route::middleware('auth')->group(function () {
+
+    // Rute untuk melihat produk (role: Admin, Purchasing, Gudang)
+    Route::middleware(['permission:lihat-komponen'])->prefix('komponen')->group(function () {
+        Route::get('/index', [KomponenController::class, 'index'])->name('komponen.index');
+    });
+
+    // Rute untuk menambahkan, mengedit, dan menghapus produk (role: Admin, Purchasing)
+    Route::middleware('permission:tambah-komponen')->prefix('komponen')->group(function () {
+        Route::get('/create', [KomponenController::class, 'create'])->name('komponen.create');
+        Route::post('/create', [KomponenController::class, 'store'])->name('komponen.store');
+    });
+
+    Route::middleware('permission:edit-komponen')->prefix('komponen')->group(function () {
+        Route::get('/edit/{id}', [KomponenController::class, 'edit'])->name('komponen.edit');
+        Route::put('/{id}', [KomponenController::class, 'update'])->name('komponen.update');
+    });
+
+    Route::middleware('permission:hapus-komponen')->prefix('komponen')->group(function () {
+        Route::delete('/{id}', [KomponenController::class, 'destroy'])->name('komponen.destroy');
+    });
+
+    Route::middleware('permission:lihat-komponen')->prefix('komponen')->group(function () {
+        Route::get('/show/{id}', [KomponenController::class, 'show'])->name('komponen.show');
+    });
+});
+
 
 // Route::middleware('auth')->group(function () {
 

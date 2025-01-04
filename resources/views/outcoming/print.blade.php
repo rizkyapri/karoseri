@@ -195,7 +195,7 @@
     <table style="border: solid 4px; border-collapse: collapse;">
         <tr>
             <td style="border-right: none; padding: 10px;" colspan="1">
-                <img src="{{ asset('admin/img/logoTRB.png') }}" alt="Logo Perusahaan" style="max-width: 90px; height: auto;">
+                <img src="{{ $path_img }}" alt="Logo Perusahaan" style="max-width: 90px; height: auto;">
             </td>
             <td style="text-align: center; padding: 10px;" colspan="5">
                 <h1 style="color: #0054a4; font-size: 30px; margin: 0; padding: 0;">PT. TRI RESTU BERSAMA</h1>
@@ -350,7 +350,7 @@
         <tr>
             <td class="left">
                 <p><b>Purchase by:</b></p>
-                <img src="{{ asset('admin/img/signature.png') }}" alt="Signature">
+                <img src="{{ $path_img1 }}" alt="Signature">
                 <p style="text-decoration: underline;"><b>Annisa</b></p>
                 <p><b>Purchasing</b></p>
             </td>

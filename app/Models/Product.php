@@ -31,4 +31,12 @@ class Product extends Model
     {
         return $this->hasMany(recap::class);
     }
+
+    // Relasi ke Komponen melalui tabel pivot
+    public function components()
+    {
+        return $this->belongsToMany(Komponen::class, 'product_has_komponens', 'id_product', 'id_komponen')
+            ->withPivot('kuantitas')
+            ->withTimestamps();
+    }
 }

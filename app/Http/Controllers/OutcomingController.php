@@ -123,7 +123,7 @@ class OutcomingController extends Controller
             return redirect()->route('outcoming.index')->with('error', 'Produk tidak ditemukan.');
         }
 
-        
+
         // Hitung selisih kuantitas
         $selisih = $request->quantity + $outcoming->quantity;
         // dd($product, $request->quantity, $incoming, $selisih);
@@ -171,9 +171,27 @@ class OutcomingController extends Controller
     public function cetak_pdf()
     {
         $outcomings = Outcoming::all();
+        $opciones_ssl = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+            ),
+        );
+        $img_path = public_path('admin/img/logoTRB.png');
+        $extencion = pathinfo($img_path, PATHINFO_EXTENSION);
+        $data = file_get_contents($img_path, false, stream_context_create($opciones_ssl));
+        $img_base_64 = base64_encode($data);
+        $path_img = 'data:image/' . $extencion . ';base64,' . $img_base_64;
+        // dd($path_img);
+
+        $img_path1 = public_path('admin/img/signature.png');
+        $extencion1 = pathinfo($img_path1, PATHINFO_EXTENSION);
+        $data1 = file_get_contents($img_path1, false, stream_context_create($opciones_ssl));
+        $img_base_641 = base64_encode($data1);
+        $path_img1 = 'data:image/' . $extencion . ';base64,' . $img_base_641;
 
         // Pastikan data dikirim sebagai array
-        $pdf = PDF::loadView('outcoming.print', ['outcomings' => $outcomings]);
+        $pdf = PDF::loadView('outcoming.print', ['outcomings' => $outcomings, 'path_img' => $path_img, 'path_img1' => $path_img1]);
 
         // Download file PDF
         return $pdf->stream();
