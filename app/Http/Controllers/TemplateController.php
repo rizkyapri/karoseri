@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Komponen;
+use App\Models\Product;
+use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TemplateController extends Controller
@@ -10,7 +14,11 @@ class TemplateController extends Controller
     // intel
     public function index()
     {
-        return view('dashboard');
+        $users = User::all()->count();
+        $components = Komponen::all()->count();
+        $suppliers = Supplier::all()->count();
+        $products = Product::all()->count();
+        return view('dashboard', compact('users', 'components', 'suppliers', 'products'));
     }
     public function about()
     {

@@ -22,8 +22,8 @@
                         <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
                             <div class="">
                                 <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    21.5k
-                                    <small class="m-0 l-h-n">users signed up</small>
+                                    {{ $users }}
+                                    <small class="m-0 l-h-n">Pengguna Terdaftar</small>
                                 </h3>
                             </div>
                             <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1"
@@ -34,11 +34,11 @@
                         <div class="p-3 bg-warning-400 rounded overflow-hidden position-relative text-white mb-g">
                             <div class="">
                                 <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    $10,203
-                                    <small class="m-0 l-h-n">Visual Index Figure</small>
+                                    {{ $components }}
+                                    <small class="m-0 l-h-n">Komponen</small>
                                 </h3>
                             </div>
-                            <i class="fal fa-gem position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4"
+                            <i class="fa-solid fa-cart-shopping position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4"
                                 style="font-size: 6rem;"></i>
                         </div>
                     </div>
@@ -46,11 +46,11 @@
                         <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
                             <div class="">
                                 <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    - 103.72
-                                    <small class="m-0 l-h-n">Offset Balance Ratio</small>
+                                    {{ $suppliers }}
+                                    <small class="m-0 l-h-n">supplier</small>
                                 </h3>
                             </div>
-                            <i class="fal fa-lightbulb position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6"
+                            <i class="fa fa-cubes position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6"
                                 style="font-size: 8rem;"></i>
                         </div>
                     </div>
@@ -58,19 +58,20 @@
                         <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
                             <div class="">
                                 <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    +40%
-                                    <small class="m-0 l-h-n">Product level increase</small>
+                                    {{ $products }}
+                                    <small class="m-0 l-h-n">Produk</small>
                                 </h3>
                             </div>
-                            <i class="fal fa-globe position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4"
+                            <i class="fal fa-shopping-bag position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4"
                                 style="font-size: 6rem;"></i>
                         </div>
                     </div>
                 </div>
                 <br>
                 <p class="panel-tag fw-500">
-                    To see all list of Core plugins for a barebone version please visit the <a href="/plugin_faq"
-                        class="fw-500"> Plugin FAQ</a> page.
+                    Sedang Dalam Perkembangan
+                    {{-- To see all list of Core plugins for a barebone version please visit the <a href="/plugin_faq"
+                        class="fw-500"> Plugin FAQ</a> page. --}}
                 </p>
 
                 <div id="js-display" class="d-none">
@@ -93,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="fs-lg fw-300 p-5 bg-white border-faded rounded mb-g shadow-5">
+        {{-- <div class="fs-lg fw-300 p-5 bg-white border-faded rounded mb-g shadow-5">
 
             <x-col :size1="6" :size2="8">
                 <x-slot name='content1'>
@@ -171,7 +172,7 @@
                     </div>
                 </x-slot>
             </x-col>
-        </div>
+        </div> --}}
     </main>
 @endsection
 @section('pages-script')
